@@ -1,6 +1,7 @@
 import pygame, random, sys
 #Let's import the Car Class
 from car import Car
+import interface
 
 
 
@@ -11,7 +12,7 @@ def car_racing():
     #loads road image
     road_image = pygame.image.load("img/estrada.png").convert()
 
-    WIDTH, HEIGHT = 900, 500
+    WIDTH, HEIGHT = 800, 600
 
     #resize screen
     road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT))
@@ -21,7 +22,7 @@ def car_racing():
     PlayerCar1 = Car("img/mycar.png", 60, 100, 70)
     PlayerCar1.rect.x = 160
     PlayerCar1.rect.y = HEIGHT - 100
-
+    font = pygame.font.SysFont('Anton', 50)
 
    
 
@@ -84,13 +85,15 @@ def car_racing():
     all_coming_cars.add(car4)
 
 
-    #Allowing the user to close the window...
+    #Allowing the user to close the screen...
     carryOn = True
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
-
+    scorebox = pygame.image.load("img/scorebox2.png")
+    score = 0
     
     clock=pygame.time.Clock()
+    enemy_hit = False
 
     while carryOn:
             for event in pygame.event.get():
@@ -118,8 +121,8 @@ def car_racing():
                      PlayerCar1.rect.y = 0
             if keys[pygame.K_DOWN] or keys[pygame.K_s]:
                 PlayerCar1.movedown(5)
-                if PlayerCar1.rect.y > 400:
-                    PlayerCar1.rect.y = 400
+                if PlayerCar1.rect.y > 500:
+                    PlayerCar1.rect.y = 500
 
 
             #Game Logic
@@ -132,24 +135,28 @@ def car_racing():
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
+                   score +=1
                    car1_lane = random.choice(lanes["faixa1"])
                    car1.rect.x = car1_lane
                    car1.rect.y = -100
 
             car2.moveForward(speed)
             if car2.rect.y > HEIGHT:
+                   score +=1
                    car2_lane = random.choice(lanes["faixa2"])
                    car2.rect.x = car2_lane
                    car2.rect.y = -100
 
             car3.moveForward(speed)
             if car3.rect.y > HEIGHT:
+                   score +=1
                    car3_lane = random.choice(lanes["faixa3"])
                    car3.rect.x = car3_lane
                    car3.rect.y = -100
 
             car4.moveForward(speed)
             if car4.rect.y > HEIGHT:
+                   score +=1
                    car4_lane = random.choice(lanes["faixa4"])
                    car4.rect.x = car4_lane
                    car4.rect.y = -100
@@ -160,7 +167,23 @@ def car_racing():
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
-                    carryOn = False
+                    #carryOn = False
+                    enemy_hit = True
+            if enemy_hit:
+                score_text = font.render(f"{score}")
+                play_again = pygame.image.load("img/Play Again Button.png")
+                main_menu = pygame.image.load("img/Menu Button.png")
+                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                screen.blit(background_lost_single, (0,0))
+                screen.blit(play_again, (500, 300))
+                screen.blit(score_text, )
+                screen.blit(main_menu, (700,300))
+
+                #updates the new screen
+                pygame.display.update()
+
+
+                break
 
                 
 
@@ -184,7 +207,29 @@ def car_racing():
             #Number of frames per secong e.g. 60
             clock.tick(60)
 
-    pygame.quit()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                waiting = False
+                pygame.quit()  # Quit the game if the window is closed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    waiting = False
+                    pygame.quit()
+        #checking for mouse position and clicks
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        #if the button is pressed the game starts over again
+        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+            if click[0] == 1:
+                car_racing()
+        # Check for mouse clicks on "Main Menu" button
+        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+            if click[0] == 1:
+                # Return to the main menu 
+                waiting = False  # Exit the waiting loop and return to the main menu
+                interface.interface()
 
 
 def car_racing_mutli():
@@ -193,7 +238,7 @@ def car_racing_mutli():
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/estrada.png").convert()
 
-    WIDTH, HEIGHT = 900, 500
+    WIDTH, HEIGHT = 800, 600
 
 # Redimensiona a imagem para o tamanho da tela
     road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT)) 
@@ -280,7 +325,7 @@ def car_racing_mutli():
     all_coming_cars.add(car4)
 
 
-    #Allowing the user to close the window...
+    #Allowing the user to close the screen...
     carryOn = True
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
@@ -311,8 +356,8 @@ def car_racing_mutli():
                      PlayerCar1.rect.y = 0
             if keys[pygame.K_DOWN]:
                 PlayerCar1.movedown(5)
-                if PlayerCar1.rect.y > 400:
-                    PlayerCar1.rect.y = 400
+                if PlayerCar1.rect.y > 500:
+                    PlayerCar1.rect.y = 500
 
             if keys[pygame.K_a]:
                 PlayerCar2.moveLeft(5)
@@ -331,8 +376,8 @@ def car_racing_mutli():
                      PlayerCar2.rect.y = 0
             if keys[pygame.K_s]:
                 PlayerCar2.movedown(5)
-                if PlayerCar2.rect.y > 400:
-                    PlayerCar2.rect.y = 400
+                if PlayerCar2.rect.y > 500:
+                    PlayerCar2.rect.y = 500
 
 
             #Game Logic

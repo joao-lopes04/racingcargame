@@ -8,7 +8,7 @@ def interface():
     # initiating pygames
     pygame.init()
     # creating the screen 900x500 pixels
-    WIDTH, HEIGHT = 900, 500
+    WIDTH, HEIGHT = 800, 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     # saving the screen sizes
     width = screen.get_width()
@@ -85,8 +85,8 @@ def interface():
                 car_racing()
 
 
-def credits_():
-    res = (900, 500)
+def credits():
+    res = (800, 600)
     screen = pygame.display.set_mode(res)
     settings_background = pygame.image.load("img/Settings.png")
     run_instructions = True
