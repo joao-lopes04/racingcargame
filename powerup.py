@@ -1,13 +1,25 @@
+import pygame
+import random
+import time
+
+class PowerUp:
+  def __init__(self, image, pu_duration):
+    self.image = image
+    self.pu_duration = pu_duration
 
 
-class PowerUp():
+class PUslow(PowerUp):
+  def apply(self, player):
+    
 
-  self.PUslow = pygame.image.load("img/")
-  self.PU50 = pygame.image.load("img/")
-  self.PUinvencibility = pygame.image.load("img/")
-  self.PUshrink = pygame.image.load("img/)
-                            
-  self.PUslow_mask = pygame.mask.from_surface(PUslow)
-  self.PU50_mask = pygame.mask.from_surface(PU50)
-  self.PUinvencibility_mask = pygame.mask.from_surface(PUinvencibility)
-  self.PUshrink_mask = pygame.mask.from_surface(PUshrink)
+
+class PU50(PowerUp):
+
+
+
+class PUshrink(PowerUp):
+
+
+
+class PUinvencibility(PowerUp):
+  
