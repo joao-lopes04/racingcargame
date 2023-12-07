@@ -7,23 +7,14 @@ from game import car_racing, car_racing_mutli
 def interface():
     # initiating pygames
     pygame.init()
-    # creating the screen 720x720 pixels
+    # creating the screen 900x500 pixels
     WIDTH, HEIGHT = 900, 500
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    # creatinbg some colors (RGB scale)
-    white = (255, 255, 255)
-    yellow = (255, 255, 0)
-    red = (255, 0, 0)
-    green = (0, 255, 0)
-    blue = (0, 0, 255)
-    color_light = (170, 170, 170)
-    color_dark = (100, 100, 100)
-    black = (0, 0, 0)
     # saving the screen sizes
     width = screen.get_width()
     height = screen.get_height()
     # creating some textlabels
-    font = pygame.font.SysFont('Corbel', 50)
+    font = pygame.font.SysFont('Anton', 50)
     
     menu_background = pygame.image.load("img/menubackground.png")
     singleplayerbutton = pygame.image.load("img/singleplayerbutton.png")
