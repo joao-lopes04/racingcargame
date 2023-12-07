@@ -1,6 +1,6 @@
 from interface import *
 
-global 
+
 
 def main():
     interface()

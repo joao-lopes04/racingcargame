@@ -170,13 +170,13 @@ def car_racing():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                score_text = font.render(f"{score}")
+                score_text = font.render(f"{score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
                 background_lost_single = pygame.image.load("img/lostbackground.jpeg")
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (500, 300))
-                screen.blit(score_text, )
+                screen.blit(score_text,(600,200) )
                 screen.blit(main_menu, (700,300))
 
                 #updates the new screen
