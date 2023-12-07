@@ -239,13 +239,8 @@ def car_racing_mutli():
 
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/estrada.png").convert()
-<<<<<<< HEAD
 
     WIDTH, HEIGHT = 900, 500
-=======
-    font = pygame.font.SysFont('Anton', 50)
-    WIDTH, HEIGHT = 800, 600
->>>>>>> b30749cbe92c1c1d3dda1d704ed4cf4bfd4a51cf
 
 # Redimensiona a imagem para o tamanho da tela
     road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT)) 
@@ -524,5 +519,3 @@ def car_racing_mutli():
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface()
-
-
