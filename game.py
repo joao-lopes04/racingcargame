@@ -129,6 +129,7 @@ def car_racing():
             for car in all_coming_cars:
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
+                    score += 1
                     car.changeSpeed(random.randint(50,100))
                     
                     car.rect.y = -200
@@ -174,9 +175,10 @@ def car_racing():
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
                 background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200) )
+                screen.blit(score_text,(600,200))
                 screen.blit(main_menu, (700,300))
 
                 #updates the new screen
@@ -190,7 +192,7 @@ def car_racing():
             all_sprites_list.update()
 
             screen.blit(road_image, (0, 0))
-
+            screen.blit()
             #Drawing on Screen
             # Desenha a imagem de fundo
             
