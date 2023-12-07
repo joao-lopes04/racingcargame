@@ -8,25 +8,15 @@ def car_racing():
 
     pygame.init()
 
-    # Carrega a imagem da estrada
+    #loads road image
     road_image = pygame.image.load("estrada.png").convert()
 
     WIDTH, HEIGHT = 900, 500
 
-# Redimensiona a imagem para o tamanho da tela
-    road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT)) 
-
-    GREEN = (20, 255, 140)
-    GREY = (210, 210 ,210)
-    WHITE = (255, 255, 255)
-    RED = (255, 0, 0)
-    PURPLE = (255, 0, 255)
-    YELLOW = (255, 255, 0)
-    CYAN = (0, 255, 255)
-    BLUE = (100, 100, 255)
+    #resize screen
+    road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT))
 
     speed = 0.6
-    colorList = (RED, GREEN, PURPLE, YELLOW, CYAN, BLUE)
 
     PlayerCar1 = Car("img/mycar.png", 60, 100, 70)
     PlayerCar1.rect.x = 160
