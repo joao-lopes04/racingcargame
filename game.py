@@ -192,7 +192,7 @@ def car_racing():
             all_sprites_list.update()
 
             screen.blit(road_image, (0, 0))
-            screen.blit()
+            
             #Drawing on Screen
             # Desenha a imagem de fundo
             
@@ -239,7 +239,7 @@ def car_racing_mutli():
 
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/estrada.png").convert()
-
+    font = pygame.font.SysFont('Anton', 50)
     WIDTH, HEIGHT = 800, 600
 
 # Redimensiona a imagem para o tamanho da tela
@@ -261,7 +261,7 @@ def car_racing_mutli():
     PlayerCar1.rect.x = 160
     PlayerCar1.rect.y = HEIGHT - 100
 
-    PlayerCar2 = Car("img/playermap1.png", 60, 100, 100)
+    PlayerCar2 = Car("img/playermap1.png", 100, 100, 70)
     PlayerCar2.rect.x = 450
     PlayerCar2.rect.y = HEIGHT - 100
 
@@ -333,7 +333,11 @@ def car_racing_mutli():
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
 
     
+    score = 0
+    
     clock=pygame.time.Clock()
+    enemy_hit1 = False
+    enemy_hit2 = False
 
     while carryOn:
             for event in pygame.event.get():
@@ -386,30 +390,35 @@ def car_racing_mutli():
             for car in all_coming_cars:
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
+                    score += 1
                     car.changeSpeed(random.randint(50,100))
                     
                     car.rect.y = -200
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
+                   score += 1
                    car1_lane = random.choice(lanes["faixa1"])
                    car1.rect.x = car1_lane
                    car1.rect.y = -100
 
             car2.moveForward(speed)
             if car2.rect.y > HEIGHT:
+                   score += 1
                    car2_lane = random.choice(lanes["faixa2"])
                    car2.rect.x = car2_lane
                    car2.rect.y = -100
 
             car3.moveForward(speed)
             if car3.rect.y > HEIGHT:
+                   score += 1
                    car3_lane = random.choice(lanes["faixa3"])
                    car3.rect.x = car3_lane
                    car3.rect.y = -100
 
             car4.moveForward(speed)
             if car4.rect.y > HEIGHT:
+                   score += 1
                    car4_lane = random.choice(lanes["faixa4"])
                    car4.rect.x = car4_lane
                    car4.rect.y = -100
@@ -420,13 +429,49 @@ def car_racing_mutli():
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
-                    carryOn = False
+                    enemy_hit1 = True
+            if enemy_hit1:
+                winner_text = font.render("yellow wins", 1, "black")
+                score_text = font.render(f"{score}", 1, "black")
+                play_again = pygame.image.load("img/Play Again Button.png")
+                main_menu = pygame.image.load("img/Menu Button.png")
+                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                
+                screen.blit(background_lost_single, (0,0))
+                screen.blit(winner_text, (500, 100))
+                screen.blit(play_again, (500, 300))
+                screen.blit(score_text,(600,200))
+                screen.blit(main_menu, (700,300))
+
+                #updates the new screen
+                pygame.display.update()
+
+                break
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
-                    carryOn = False
+                    #carryOn = False
+                    enemy_hit2 = True
+            if enemy_hit2:
+                winner_text = font.render("red wins", 1, "black")
+                score_text = font.render(f"{score}", 1, "black")
+                play_again = pygame.image.load("img/Play Again Button.png")
+                main_menu = pygame.image.load("img/Menu Button.png")
+                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                
+                screen.blit(background_lost_single, (0,0))
+                screen.blit(winner_text, (500, 100))
+                screen.blit(play_again, (500, 300))
+                screen.blit(score_text,(600,200))
+                screen.blit(main_menu, (700,300))
+
+                #updates the new screen
+                pygame.display.update()
+
+
+                break
 
                 
 
@@ -450,4 +495,28 @@ def car_racing_mutli():
             #Number of frames per secong e.g. 60
             clock.tick(60)
 
-    pygame.quit()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                waiting = False
+                pygame.quit()  # Quit the game if the window is closed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    waiting = False
+                    pygame.quit()
+        #checking for mouse position and clicks
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        #if the button is pressed the game starts over again
+        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+            if click[0] == 1:
+                car_racing_mutli()
+        # Check for mouse clicks on "Main Menu" button
+        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+            if click[0] == 1:
+                # Return to the main menu 
+                waiting = False  # Exit the waiting loop and return to the main menu
+                interface.interface()
+
+
