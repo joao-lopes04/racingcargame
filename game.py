@@ -19,7 +19,7 @@ def car_racing():
 
     speed = 0.6
 
-    PlayerCar1 = Car("img/mycar.png", 60, 100, 70)
+    PlayerCar1 = Car("img/playermap1.png", 100, 100, 70)
     PlayerCar1.rect.x = 160
     PlayerCar1.rect.y = HEIGHT - 100
     font = pygame.font.SysFont('Anton', 50)
@@ -257,11 +257,11 @@ def car_racing_mutli():
     speed = 0.6
     colorList = (RED, GREEN, PURPLE, YELLOW, CYAN, BLUE)
 
-    PlayerCar1 = Car("img/mycar.png", 60, 100, 70)
+    PlayerCar1 = Car("img/player1map1.png", 100, 100, 70)
     PlayerCar1.rect.x = 160
     PlayerCar1.rect.y = HEIGHT - 100
 
-    PlayerCar2 = Car("img/playermap1.png", 100, 100, 70)
+    PlayerCar2 = Car("img/player2map1.png", 100, 100, 70)
     PlayerCar2.rect.x = 450
     PlayerCar2.rect.y = HEIGHT - 100
 
@@ -431,17 +431,18 @@ def car_racing_mutli():
                     # End Of Game
                     enemy_hit1 = True
             if enemy_hit1:
-                winner_text = font.render("yellow wins", 1, "black")
-                score_text = font.render(f"{score}", 1, "black")
+                
+                score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                background_lost_multi = pygame.image.load("GREEN WINS!.png")
                 
-                screen.blit(background_lost_single, (0,0))
-                screen.blit(winner_text, (500, 100))
-                screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200))
-                screen.blit(main_menu, (700,300))
+                screen.blit(background_lost_multi, (0,0))
+                
+                screen.blit(play_again, (630, 350))
+                screen.blit(score_text,(600,265))
+                screen.blit(main_menu, (630,450))
+
 
                 #updates the new screen
                 pygame.display.update()
@@ -455,17 +456,17 @@ def car_racing_mutli():
                     #carryOn = False
                     enemy_hit2 = True
             if enemy_hit2:
-                winner_text = font.render("red wins", 1, "black")
-                score_text = font.render(f"{score}", 1, "black")
+                
+                score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                background_lost_multi = pygame.image.load("RED WINS!.png")
                 
-                screen.blit(background_lost_single, (0,0))
-                screen.blit(winner_text, (500, 100))
-                screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200))
-                screen.blit(main_menu, (700,300))
+                screen.blit(background_lost_multi, (0,0))
+                
+                screen.blit(play_again, (630, 350))
+                screen.blit(score_text,(600,265))
+                screen.blit(main_menu, (630,450))
 
                 #updates the new screen
                 pygame.display.update()
@@ -509,11 +510,11 @@ def car_racing_mutli():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         #if the button is pressed the game starts over again
-        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+        if 630  < mouse_x < 630 + play_again.get_width() and 350  < mouse_y < 350 + play_again.get_height():
             if click[0] == 1:
                 car_racing_mutli()
         # Check for mouse clicks on "Main Menu" button
-        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+        if 630  < mouse_x < 630 + main_menu.get_width() and 450  < mouse_y < 450 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu

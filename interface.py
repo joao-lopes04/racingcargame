@@ -16,7 +16,7 @@ def interface():
     # creating some textlabels
     font = pygame.font.SysFont('Anton', 50)
     
-    menu_background = pygame.image.load("img/menubackground.png")
+    menu_background = pygame.image.load("menubackground.png")
     singleplayerbutton = pygame.image.load("img/singleplayerbutton.png")
     multiplayerbutton = pygame.image.load("img/multiplayerbutton.png")
     settingsbutton = pygame.image.load("img/settingsbutton.png")
@@ -88,7 +88,7 @@ def interface():
 def credits():
     res = (800, 600)
     screen = pygame.display.set_mode(res)
-    settings_background = pygame.image.load("img/Settings.png")
+    settings_background = pygame.image.load("Settings (1).png")
     run_instructions = True
     while run_instructions:
         for event in pygame.event.get():
