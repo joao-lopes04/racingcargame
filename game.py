@@ -9,7 +9,7 @@ def car_racing():
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("estrada.png").convert()
+    road_image = pygame.image.load("img/estrada.png").convert()
 
     WIDTH, HEIGHT = 900, 500
 
@@ -40,7 +40,7 @@ def car_racing():
     "faixa4": [550, 570, 590]
 }
 
-    image_paths = ["carro random.png", "carro random2.png", "carro random3.png", "carro random4.png"]
+    image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
     car1_lane_start = random.choice(lanes["faixa1"])
@@ -191,7 +191,7 @@ def car_racing_mutli():
     pygame.init()
 
     # Carrega a imagem da estrada
-    road_image = pygame.image.load("estrada.png").convert()
+    road_image = pygame.image.load("img/estrada.png").convert()
 
     WIDTH, HEIGHT = 900, 500
 
@@ -235,7 +235,7 @@ def car_racing_mutli():
     "faixa4": [550, 570, 590]
 }
 
-    image_paths = ["carro random.png", "carro random2.png", "carro random3.png", "carro random4.png"]
+    image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
     car1_lane_start = random.choice(lanes["faixa1"])
