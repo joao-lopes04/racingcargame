@@ -11,7 +11,7 @@ def car_racing():
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/1.png").convert()
+    road_image = pygame.image.load("img/1 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -249,7 +249,7 @@ def car_racing2():
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/background2.jpeg").convert()
+    road_image = pygame.image.load("img/3 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -429,7 +429,18 @@ def car_racing2():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
             
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -477,7 +488,7 @@ def car_racing3():
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/background3.jpeg").convert()
+    road_image = pygame.image.load("img/2 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -658,7 +669,18 @@ def car_racing3():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
             
             screen
             #Drawing on Screen
@@ -706,7 +728,7 @@ def car_racing_multi():
     pygame.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
-    road_image = pygame.image.load("img/estrada.png").convert()
+    road_image = pygame.image.load("img/1 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -946,7 +968,18 @@ def car_racing_multi():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -992,7 +1025,7 @@ def car_racing_multi2():
     pygame.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
-    road_image = pygame.image.load("img/background2.jpeg").convert()
+    road_image = pygame.image.load("img/3 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -1189,7 +1222,7 @@ def car_racing_multi2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREENWINS_sea (1).png")
+                background_lost_multi = pygame.image.load("img/GREENWINS_sea (1).png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1214,7 +1247,7 @@ def car_racing_multi2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("REDWINS_sea.png")
+                background_lost_multi = pygame.image.load("img/REDWINS_sea.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1232,7 +1265,18 @@ def car_racing_multi2():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -1279,7 +1323,7 @@ def car_racing_multi3():
     pygame.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
-    road_image = pygame.image.load("img/background3.jpeg").convert()
+    road_image = pygame.image.load("img/2 (1).png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -1476,7 +1520,7 @@ def car_racing_multi3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREENWINS_space.png")
+                background_lost_multi = pygame.image.load("img/GREENWINS_space.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1501,7 +1545,7 @@ def car_racing_multi3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("REDWINS_space.png")
+                background_lost_multi = pygame.image.load("img/REDWINS_space.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1519,7 +1563,18 @@ def car_racing_multi3():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
