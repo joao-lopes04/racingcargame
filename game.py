@@ -1,6 +1,7 @@
 import pygame, random, sys
 #Let's import the Car Class
 from car import Car
+#from powerup import PowerUp, SlowPowerUp, ShrinkPlayerPowerUp, InvincibilityPowerUp, ScoreBoostPowerUp
 import interface
 
 global offset_1
@@ -11,7 +12,7 @@ def car_racing():
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/1 (1).png").convert()
+    road_image = pygame.image.load("img/1 (1).png").convert_alpha()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -25,7 +26,7 @@ def car_racing():
     PlayerCar1.rect.y = HEIGHT - 100
     font = pygame.font.SysFont('Anton', 50)
 
-   
+    
 
     size = (WIDTH, HEIGHT)
     screen = pygame.display.set_mode(size)
@@ -41,6 +42,8 @@ def car_racing():
     "faixa3": [440, 450, 465],
     "faixa4": [550, 570, 590]
 }
+
+
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
@@ -94,6 +97,7 @@ def car_racing():
     
     clock=pygame.time.Clock()
     enemy_hit = False
+    powerup1_hit = False
 
     while carryOn:
             for event in pygame.event.get():
@@ -162,23 +166,24 @@ def car_racing():
                    car4.rect.x = car4_lane
                    car4.rect.y = -100
                 
+            
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
                     #carryOn = False
                     enemy_hit = True
+
+           
+
+
             if enemy_hit:
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
-=======
-                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
->>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -407,7 +412,7 @@ def car_racing2():
                 
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -417,11 +422,7 @@ def car_racing2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
-=======
-                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
->>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -510,7 +511,7 @@ def car_racing3():
     PlayerCar1.rect.y = HEIGHT - 100
     font = pygame.font.SysFont('Anton', 50)
 
-   
+    
 
     size = (WIDTH, HEIGHT)
     screen = pygame.display.set_mode(size)
@@ -650,7 +651,7 @@ def car_racing3():
                 
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -660,11 +661,7 @@ def car_racing3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
-=======
-                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
->>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -927,7 +924,7 @@ def car_racing_multi():
                 
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -1224,7 +1221,7 @@ def car_racing_multi2():
                 
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -1546,7 +1543,7 @@ def car_racing_multi3():
 
                 break
 
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
