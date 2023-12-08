@@ -42,11 +42,7 @@ def car_racing():
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
     "faixa3": [440, 450, 465],
-<<<<<<< HEAD
     "faixa4": [530, 550, 570] 
-=======
-    "faixa4": [530, 550, 570]
->>>>>>> 13f0eb789e2b14f16ddfaaa834090ec5c070e581
 }
     
     slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
@@ -324,9 +320,6 @@ def car_racing():
 
            
             if enemy_hit:
-
-                car_sound.stop()
-                game_over_sound.play()
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -334,8 +327,8 @@ def car_racing():
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
-                screen.blit(score_text,(486,300))
-                screen.blit(main_menu, (600,400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (700,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -359,10 +352,6 @@ def car_racing():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
             
             
             #Drawing on Screen
@@ -403,9 +392,8 @@ def car_racing():
                     car.changeSpeed(random.randint(70, 115))'''
                 car_racing()
         # Check for mouse clicks on "Main Menu" button
-        if 600  < mouse_x < 600 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 '''PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
                 for car in all_coming_cars:
@@ -416,7 +404,7 @@ def car_racing():
 def car_racing2():
 
     pygame.init()
-    pygame.mixer.init()
+
     #loads road image
     road_image = pygame.image.load("img/3 (1).png").convert()
 
@@ -538,14 +526,11 @@ def car_racing2():
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
-    boat_sound = pygame.mixer.Sound("boataudio.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    
     clock=pygame.time.Clock()
     enemy_hit = False
 
     while carryOn:
-            boat_sound.play()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
@@ -663,8 +648,6 @@ def car_racing2():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                boat_sound.stop()
-                game_over_sound.play()
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -672,8 +655,8 @@ def car_racing2():
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
-                screen.blit(score_text,(486,300))
-                screen.blit(main_menu, (600,400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (700,400))
                 #updates the new screen
                 pygame.display.update()
 
@@ -696,10 +679,6 @@ def car_racing2():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
             
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -735,9 +714,8 @@ def car_racing2():
             if click[0] == 1:
                 car_racing2()
         # Check for mouse clicks on "Main Menu" button
-        if 600  < mouse_x < 600 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface2()
@@ -746,7 +724,7 @@ def car_racing2():
 def car_racing3():
 
     pygame.init()
-    pygame.mixer.init()
+
     #loads road image
     road_image = pygame.image.load("img/2 (1).png").convert()
 
@@ -867,14 +845,11 @@ def car_racing3():
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
-    spaceship_sound = pygame.mixer.Sound("engine space.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    
     clock=pygame.time.Clock()
     enemy_hit = False
 
     while carryOn:
-            spaceship_sound.play()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
@@ -991,8 +966,6 @@ def car_racing3():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                game_over_sound.play()
-                spaceship_sound.stop()
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -1000,8 +973,8 @@ def car_racing3():
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
-                screen.blit(score_text,(486,300))
-                screen.blit(main_menu, (600,400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (700,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -1025,10 +998,6 @@ def car_racing3():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
             
             screen
             #Drawing on Screen
@@ -1065,9 +1034,8 @@ def car_racing3():
             if click[0] == 1:
                 car_racing3()
         # Check for mouse clicks on "Main Menu" button
-        if 600  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface3()
@@ -1075,7 +1043,6 @@ def car_racing3():
 
 def car_racing_multi():
     pygame.init()
-    pygame.mixer.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/1 (1).png").convert()
@@ -1209,18 +1176,15 @@ def car_racing_multi():
     carryOn = True
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
-    scorebox = pygame.image.load("img/scorebox2.png")
+
     
     score = 0
-    car_sound = pygame.mixer.Sound("engine.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
 
     while carryOn:
-            car_sound.play()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
@@ -1353,8 +1317,7 @@ def car_racing_multi():
                     # End Of Game
                     enemy_hit1 = True
             if enemy_hit1:
-                game_over_sound.play()
-                car_sound.stop()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -1379,8 +1342,7 @@ def car_racing_multi():
                     #carryOn = False
                     enemy_hit2 = True
             if enemy_hit2:
-                game_over_sound.play()
-                car_sound.stop()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -1414,10 +1376,6 @@ def car_racing_multi():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -1455,14 +1413,12 @@ def car_racing_multi():
         # Check for mouse clicks on "Main Menu" button
         if 630  < mouse_x < 630 + main_menu.get_width() and 450  < mouse_y < 450 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface()
 
 def car_racing_multi2():
     pygame.init()
-    pygame.mixer.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/3 (1).png").convert()
@@ -1596,17 +1552,15 @@ def car_racing_multi2():
     carryOn = True
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
-    scorebox = pygame.image.load("img/scorebox2.png")
-    boat_sound = pygame.mixer.Sound("boataudio.wav")
-    game_over_sound  = pygame.mixer.Sound("gameoveraudio.wav")
+
+    
     score = 0
-    button_sound = pygame.mixer.Sound("click.wav")
+    
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
 
     while carryOn:
-            boat_sound.play()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
@@ -1739,8 +1693,7 @@ def car_racing_multi2():
                     # End Of Game
                     enemy_hit1 = True
             if enemy_hit1:
-                boat_sound.stop()
-                game_over_sound.play()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -1765,8 +1718,7 @@ def car_racing_multi2():
                     #carryOn = False
                     enemy_hit2 = True
             if enemy_hit2:
-                boat_sound.stop()
-                game_over_sound.play()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -1800,10 +1752,6 @@ def car_racing_multi2():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -1841,7 +1789,6 @@ def car_racing_multi2():
         # Check for mouse clicks on "Main Menu" button
         if 630  < mouse_x < 630 + main_menu.get_width() and 450  < mouse_y < 450 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface2()
@@ -1849,7 +1796,6 @@ def car_racing_multi2():
 
 def car_racing_multi3():
     pygame.init()
-    pygame.mixer.init()
     font = pygame.font.SysFont('Anton', 50)
     # Carrega a imagem da estrada
     road_image = pygame.image.load("img/2 (1).png").convert()
@@ -1982,17 +1928,15 @@ def car_racing_multi3():
     carryOn = True
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
-    scorebox = pygame.image.load("img/scorebox2.png")
-    spaceship_sound = pygame.mixer.Sound("engine space.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
+
+    
     score = 0
-    button_sound = pygame.mixer.Sound("click.wav")
+    
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
 
     while carryOn:
-            spaceship_sound.play()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
@@ -2124,8 +2068,7 @@ def car_racing_multi3():
                     # End Of Game
                     enemy_hit1 = True
             if enemy_hit1:
-                game_over_sound.play()
-                spaceship_sound.stop()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -2150,8 +2093,7 @@ def car_racing_multi3():
                     #carryOn = False
                     enemy_hit2 = True
             if enemy_hit2:
-                game_over_sound.play()
-                spaceship_sound.stop()
+                
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
@@ -2185,10 +2127,6 @@ def car_racing_multi3():
             # drawing the background twice, one above the other
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
-            score_text = font.render(f" {score}", 1, "black")
-            
-            screen.blit(scorebox, (10,10))
-            screen.blit(score_text, (60,45))
 
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -2226,7 +2164,6 @@ def car_racing_multi3():
         # Check for mouse clicks on "Main Menu" button
         if 630  < mouse_x < 630 + main_menu.get_width() and 450  < mouse_y < 450 + main_menu.get_height():
             if click[0] == 1:
-                button_sound.play()
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface3()
