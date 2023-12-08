@@ -1,7 +1,7 @@
 import pygame, random, sys
 #Let's import the Car Class
 from car import Car
-#from powerup import PowerUp, SlowPowerUp, ShrinkPlayerPowerUp, InvincibilityPowerUp, ScoreBoostPowerUp
+from powerup import SlowPowerUp, ScoreBoostPowerUp
 import interface
 
 global offset_1
@@ -35,37 +35,44 @@ def car_racing():
     #This will be a list that will contain all the sprites we intend to use in our game.
     all_sprites_list = pygame.sprite.Group()
 
+    
 
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
+    
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -100
 
-
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -100
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70, 100))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -73,7 +80,7 @@ def car_racing():
 
 
 
-
+    
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
@@ -81,6 +88,9 @@ def car_racing():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -88,6 +98,11 @@ def car_racing():
     all_coming_cars.add(car3)
     all_coming_cars.add(car4)
 
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
 
     #Allowing the user to close the screen...
     carryOn = True
@@ -98,6 +113,8 @@ def car_racing():
     clock=pygame.time.Clock()
     enemy_hit = False
     powerup1_hit = False
+    powerup2_hit = False
+    frame_count = 0
 
     while carryOn:
             for event in pygame.event.get():
@@ -116,8 +133,8 @@ def car_racing():
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
-                    PlayerCar1.rect.x = 610
+                if PlayerCar1.rect.x > 570:
+                    PlayerCar1.rect.x = 570
 
             if keys[pygame.K_UP] or keys[pygame.K_w]:
                 PlayerCar1.moveup(5)
@@ -129,14 +146,35 @@ def car_racing():
                     PlayerCar1.rect.y = 500
 
 
+        
             #Game Logic
             for car in all_coming_cars:
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70,110))
                     
                     car.rect.y = -200
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -200
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -100
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -200
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -100
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -176,9 +214,46 @@ def car_racing():
                     #carryOn = False
                     enemy_hit = True
 
+            car_collision_powerup1 = pygame.sprite.spritecollide(PlayerCar1, powerup1_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup1:
+                 powerup1_hit = True
+
+            car_collision_powerup2 = pygame.sprite.spritecollide(PlayerCar1, powerup2_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup2:
+                 powerup2_hit = True
+
+
+            powerup_active = False
+            powerup_duration = 300
+            if powerup1_hit:
+                if pygame.sprite.spritecollide(PlayerCar1, powerup1_sprite_list, True):
+                # Remove the collided power-up sprite from the group
+                    for powerup in powerup1_sprite_list:
+                        if pygame.sprite.collide_rect(PlayerCar1, powerup):
+                            powerup.kill()
+                    #PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
+                    powerup_active = True
+                
+                
+
+            if powerup_active:
+                frame_count += 1
+                for car in all_coming_cars:
+                    car.changeSpeed(50)
+
+                if frame_count >= powerup_duration:
+                    powerup_active = False
+                    
+                    for car in all_coming_cars:
+                        car.changeSpeed(random.randint(70, 110))
+                        
+                    frame_count = 0
+
+            if powerup2_hit:
+                score += 50
+
+
            
-
-
             if enemy_hit:
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
@@ -188,7 +263,7 @@ def car_racing():
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
                 screen.blit(score_text,(500,300))
-                screen.blit(main_menu, (650,400))
+                screen.blit(main_menu, (700,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -213,6 +288,7 @@ def car_racing():
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
             
+            
             #Drawing on Screen
             # Desenha a imagem de fundo
             
@@ -222,6 +298,7 @@ def car_racing():
 
             #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
             all_sprites_list.draw(screen)
+            
 
             #Refresh Screen
             pygame.display.flip()
@@ -245,11 +322,17 @@ def car_racing():
         #if the button is pressed the game starts over again
         if 450  < mouse_x < 450 + play_again.get_width() and 400  < mouse_y < 400 + play_again.get_height():
             if click[0] == 1:
+                '''PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
+                for car in all_coming_cars:
+                    car.changeSpeed(random.randint(70, 115))'''
                 car_racing()
         # Check for mouse clicks on "Main Menu" button
-        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
+                '''PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
+                for car in all_coming_cars:
+                    car.changeSpeed(random.randint(70, 115))'''
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface()
 
@@ -285,31 +368,31 @@ def car_racing2():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
 
     image_paths = ["img/enemymap2.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -378,7 +461,7 @@ def car_racing2():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70,115))
                     
                     car.rect.y = -200
 
@@ -427,7 +510,7 @@ def car_racing2():
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
                 screen.blit(score_text,(500,300))
-                screen.blit(main_menu, (650,400))
+                screen.blit(main_menu, (700,400))
                 #updates the new screen
                 pygame.display.update()
 
@@ -485,7 +568,7 @@ def car_racing2():
             if click[0] == 1:
                 car_racing2()
         # Check for mouse clicks on "Main Menu" button
-        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
@@ -524,31 +607,31 @@ def car_racing3():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
 
     image_paths = ["img/enemymap3.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -617,7 +700,7 @@ def car_racing3():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
 
@@ -666,7 +749,7 @@ def car_racing3():
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
                 screen.blit(score_text,(500,300))
-                screen.blit(main_menu, (650,400))
+                screen.blit(main_menu, (700,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -726,7 +809,7 @@ def car_racing3():
             if click[0] == 1:
                 car_racing3()
         # Check for mouse clicks on "Main Menu" button
-        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
+        if 700  < mouse_x < 700 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
@@ -777,31 +860,31 @@ def car_racing_multi():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -852,7 +935,7 @@ def car_racing_multi():
             if keys[pygame.K_RIGHT]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
+                if PlayerCar1.rect.x > 570:
                     PlayerCar1.rect.x = 610
 
             if keys[pygame.K_UP]:
@@ -872,8 +955,8 @@ def car_racing_multi():
             if keys[pygame.K_d]:
                 PlayerCar2.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar2.rect.x > 610:
-                    PlayerCar2.rect.x = 610
+                if PlayerCar2.rect.x > 570:
+                    PlayerCar2.rect.x = 570
 
             if keys[pygame.K_w]:
                 PlayerCar2.moveup(5)
@@ -890,7 +973,7 @@ def car_racing_multi():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
 
@@ -939,7 +1022,7 @@ def car_racing_multi():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
 
@@ -948,7 +1031,7 @@ def car_racing_multi():
 
                 break
 
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -964,7 +1047,7 @@ def car_racing_multi():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
                 #updates the new screen
@@ -1074,31 +1157,31 @@ def car_racing_multi2():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
 
     image_paths = ["img/enemymap2.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -1187,7 +1270,7 @@ def car_racing_multi2():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
 
@@ -1236,7 +1319,7 @@ def car_racing_multi2():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
 
@@ -1245,7 +1328,7 @@ def car_racing_multi2():
 
                 break
 
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -1261,7 +1344,7 @@ def car_racing_multi2():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
                 #updates the new screen
@@ -1372,31 +1455,31 @@ def car_racing_multi3():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-    "faixa3": [440, 450, 465],
+    "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
 
     image_paths = ["img/enemymap3.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(50, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -1485,7 +1568,7 @@ def car_racing_multi3():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(50,100))
+                    car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
 
@@ -1519,7 +1602,7 @@ def car_racing_multi3():
                 
                 
                 # Check if there is a car collision
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -1534,7 +1617,7 @@ def car_racing_multi3():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
 
@@ -1543,7 +1626,7 @@ def car_racing_multi3():
 
                 break
 
-            car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
+            car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
                     print("Car crash!")
                     # End Of Game
@@ -1559,7 +1642,7 @@ def car_racing_multi3():
                 screen.blit(background_lost_multi, (0,0))
                 
                 screen.blit(play_again, (630, 350))
-                screen.blit(score_text,(600,265))
+                screen.blit(score_text,(600,270))
                 screen.blit(main_menu, (630,450))
 
                 #updates the new screen

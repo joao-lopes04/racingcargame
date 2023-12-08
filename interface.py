@@ -271,7 +271,7 @@ def draw_map_selection():
     res = (800,600)
     screen = pygame.display.set_mode(res)
     playbuttonmaps = pygame.image.load("img/playbuttonmaps.png")
-    mapsbackground = pygame.transform.scale(pygame.image.load("img/mapsbackground.png"), (res))
+    mapsbackground = pygame.transform.scale(pygame.image.load("img/Maps.png"), (res))
     #handles the settings window event
     run_map_selection = True
     while run_map_selection:
@@ -287,9 +287,9 @@ def draw_map_selection():
 
         #draw the diferent maps and a play button on them
         screen.blit(mapsbackground,(0,0))
-        screen.blit(playbuttonmaps, (85,330))
-        screen.blit(playbuttonmaps, (365, 330))
-        screen.blit(playbuttonmaps, (635, 330))
+        screen.blit(playbuttonmaps, (92,330))
+        screen.blit(playbuttonmaps, (357, 330))
+        screen.blit(playbuttonmaps, (626, 330))
 
 
 
@@ -305,19 +305,19 @@ def draw_map_selection():
         # Check for mouse clicks on each map option
 
         #if there is a click in the area of this coordinates open the highway menu and adjust the background sounds
-        if 85  < mouse_x < 85 + playbuttonmaps.get_width() \
+        if 92  < mouse_x < 92 + playbuttonmaps.get_width() \
                 and  330  < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
                 interface()
                 
         #if there is a click in the area of this coordinates open the ocean menu and adjust the background sounds
-        if 365 - playbuttonmaps.get_width() < mouse_x < 365 + playbuttonmaps.get_width() \
+        if 357 - playbuttonmaps.get_width() < mouse_x < 357 + playbuttonmaps.get_width() \
                 and  330  < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
                 interface2()
                 
         #if there is a click in the area of this coordinates open the space menu and adjust the background sounds
-        if 635 - playbuttonmaps.get_width() < mouse_x < 635 +  playbuttonmaps.get_width() \
+        if 627 - playbuttonmaps.get_width() < mouse_x < 627 +  playbuttonmaps.get_width() \
                 and  330 < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
                 interface3()
