@@ -174,7 +174,7 @@ def car_racing():
                 score_text = font.render(f"{score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (500, 300))
@@ -402,7 +402,7 @@ def car_racing2():
                 score_text = font.render(f"{score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (500, 300))
@@ -544,7 +544,7 @@ def car_racing3():
 
     #Allowing the user to close the screen...
     carryOn = True
-    game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
+    game_over_image = pygame.image.load("GAME OVER SAPO.png").convert_alpha()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
@@ -631,7 +631,7 @@ def car_racing3():
                 score_text = font.render(f"{score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("img/lostbackground.jpeg")
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (500, 300))
