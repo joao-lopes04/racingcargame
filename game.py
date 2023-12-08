@@ -3,14 +3,15 @@ import pygame, random, sys
 from car import Car
 import interface
 
-
+global offset_1
+offset_1 = 0
 
 def car_racing():
 
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/estrada.png").convert()
+    road_image = pygame.image.load("img/1.png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -190,7 +191,18 @@ def car_racing():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
             
             #Drawing on Screen
             # Desenha a imagem de fundo
