@@ -34,14 +34,14 @@ class SlowPowerUp(pygame.sprite.Sprite):
         self.rect.y += self.speed * speed / 20
     
 
-'''class InvincibilityPowerUp(PowerUp):
-    def __init__(self, image, width, height, speed, pu_duration):
-       super().__init__(image, width, height, speed, pu_duration)
+class InvincibilityPowerUp(pygame.sprite.Sprite):
+    def __init__(self, image, width, height, speed):
+       super().__init__()
        self.image = pygame.image.load("img/SlowPowerUp.png")
        self.width = width
        self.height =  height
        self.speed = speed
-       self.pu_duration = pu_duration
+       
        self.rect = self.image.get_rect()
 
     
@@ -54,7 +54,7 @@ class SlowPowerUp(pygame.sprite.Sprite):
         pass
     
     def moveForward(self, speed):
-        self.rect.y += self.speed * speed / 20 '''
+        self.rect.y += self.speed * speed / 20 
 
 
 

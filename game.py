@@ -1,7 +1,7 @@
 import pygame, random, sys
 #Let's import the Car Class
 from car import Car
-from powerup import SlowPowerUp, ScoreBoostPowerUp
+from powerup import SlowPowerUp, ScoreBoostPowerUp, ShrinkPlayerPowerUp
 import interface
 
 global offset_1
@@ -46,33 +46,43 @@ def car_racing():
     
     slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
     slowPU.rect.x = random.randint(135, 570-50)
-    slowPU.rect.y = -100
+    slowPU.rect.y = -3749
+
+
 
     plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
     plus50PU.rect.x = random.randint(135, 570-50)
-    plus50PU.rect.y = -100
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
-    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
+    car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
     car1.rect.y = -100
     car1.repaint(random.choice(image_paths))
 
-    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
+    car2 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
     car2.repaint(random.choice(image_paths))
 
-    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70, 110))
+    car3 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car3_lane_start = random.choice(lanes["faixa3"])
     car3.rect.x = car3_lane_start
     car3.rect.y = -300
     car3.repaint(random.choice(image_paths))
 
-    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70, 100))
+    car4 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car4_lane_start = random.choice(lanes["faixa4"])
     car4.rect.x = car4_lane_start
     car4.rect.y = -900
@@ -90,19 +100,29 @@ def car_racing():
     all_sprites_list.add(car4)
     all_sprites_list.add(slowPU)
     all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
 
 
-    all_coming_cars = pygame.sprite.Group()
-    all_coming_cars.add(car1)
-    all_coming_cars.add(car2)
-    all_coming_cars.add(car3)
-    all_coming_cars.add(car4)
+    
 
     powerup1_sprite_list = pygame.sprite.Group()
     powerup1_sprite_list.add(slowPU)
 
     powerup2_sprite_list = pygame.sprite.Group()
     powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
+
+    all_coming_cars = pygame.sprite.Group()
+    all_coming_cars.add(car1)
+    all_coming_cars.add(car2)
+    all_coming_cars.add(car3)
+    all_coming_cars.add(car4)
 
     #Allowing the user to close the screen...
     carryOn = True
@@ -114,6 +134,7 @@ def car_racing():
     enemy_hit = False
     powerup1_hit = False
     powerup2_hit = False
+    powerup3_hit = False
     frame_count = 0
 
     while carryOn:
@@ -152,29 +173,49 @@ def car_racing():
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
                     score += 1
-                    car.changeSpeed(random.randint(70,110))
+                    car.changeSpeed(random.randint(70,115))
                     
                     car.rect.y = -200
-
+            
             for powerup in powerup1_sprite_list:
                  powerup.moveForward(speed)
                  if powerup.rect.y > HEIGHT:
-                      powerup.rect.y = -200
+                      powerup.rect.y = -3749
 
             slowPU.moveForward(speed)
             if slowPU.rect.y > HEIGHT:
                  slowPU.rect.x = random.randint(135, 570-50)
-                 slowPU.rect.y = -100
+                 slowPU.rect.y = -3749
 
             for powerup in powerup2_sprite_list:
                  powerup.moveForward(speed)
                  if powerup.rect.y > HEIGHT:
-                      powerup.rect.y = -200
+                      powerup.rect.y = -2382
 
             plus50PU.moveForward(speed)
             if plus50PU.rect.y > HEIGHT:
                  plus50PU.rect.x = random.randint(135, 570-50)
-                 plus50PU.rect.y = -100
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -214,25 +255,24 @@ def car_racing():
                     #carryOn = False
                     enemy_hit = True
 
-            car_collision_powerup1 = pygame.sprite.spritecollide(PlayerCar1, powerup1_sprite_list, False, pygame.sprite.collide_mask)
+            '''car_collision_powerup1 = pygame.sprite.spritecollide(PlayerCar1, powerup1_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup1:
-                 powerup1_hit = True
+                powerup1_hit = True
 
             car_collision_powerup2 = pygame.sprite.spritecollide(PlayerCar1, powerup2_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup2:
-                 powerup2_hit = True
+                powerup2_hit = True
 
+            car_collision_powerup3 = pygame.sprite.spritecollide(PlayerCar1, powerup3_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup3:
+                powerup3_hit = True
 
             powerup_active = False
             powerup_duration = 300
             if powerup1_hit:
-                if pygame.sprite.spritecollide(PlayerCar1, powerup1_sprite_list, True):
-                # Remove the collided power-up sprite from the group
-                    for powerup in powerup1_sprite_list:
-                        if pygame.sprite.collide_rect(PlayerCar1, powerup):
-                            powerup.kill()
-                    #PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
-                    powerup_active = True
+                all_sprites_list.remove(slowPU)
+                #PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
+                powerup_active = True
                 
                 
 
@@ -243,7 +283,7 @@ def car_racing():
 
                 if frame_count >= powerup_duration:
                     powerup_active = False
-                    
+                    all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
                         
@@ -252,6 +292,26 @@ def car_racing():
             if powerup2_hit:
                 score += 50
 
+
+            if powerup3_hit:
+                all_sprites_list.remove(shrinkPU)
+                #PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
+                powerup_active = True
+                
+                
+
+            if powerup_active:
+                frame_count += 1
+                for car in all_coming_cars:
+                    car.changedimensions(30,50)
+                    all_sprites_list.add(shrinkPU)
+                if frame_count >= powerup_duration:
+                    powerup_active = False
+                    
+                    for car in all_coming_cars:
+                        car.changedimensions(60,100)
+                        
+                    frame_count = 0'''
 
            
             if enemy_hit:
@@ -372,6 +432,25 @@ def car_racing2():
     "faixa4": [550, 570, 590]
 }
 
+
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -3749
+
+
+
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
+
     image_paths = ["img/enemymap2.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
@@ -408,6 +487,26 @@ def car_racing2():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
+
+
+    
+
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
+
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -464,6 +563,48 @@ def car_racing2():
                     car.changeSpeed(random.randint(70,115))
                     
                     car.rect.y = -200
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -3749
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -3749
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -2382
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
+
+
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -611,6 +752,25 @@ def car_racing3():
     "faixa4": [550, 570, 590]
 }
 
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -3749
+
+
+
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
+
+
     image_paths = ["img/enemymap3.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
@@ -647,6 +807,25 @@ def car_racing3():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
+
+
+    
+
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -703,6 +882,47 @@ def car_racing3():
                     car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
+
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -3749
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -3749
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -2382
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -864,6 +1084,25 @@ def car_racing_multi():
     "faixa4": [550, 570, 590]
 }
 
+
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -3749
+
+
+
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
+
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
@@ -901,6 +1140,25 @@ def car_racing_multi():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
+
+
+    
+
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -936,7 +1194,7 @@ def car_racing_multi():
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
                 if PlayerCar1.rect.x > 570:
-                    PlayerCar1.rect.x = 610
+                    PlayerCar1.rect.x = 570
 
             if keys[pygame.K_UP]:
                 PlayerCar1.moveup(5)
@@ -976,6 +1234,47 @@ def car_racing_multi():
                     car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
+
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -3749
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -3749
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -2382
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -1160,6 +1459,25 @@ def car_racing_multi2():
     "faixa3": [440, 450, 470],
     "faixa4": [550, 570, 590]
 }
+    
+
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -3749
+
+
+
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
 
     image_paths = ["img/enemymap2.png"]
 
@@ -1198,6 +1516,25 @@ def car_racing_multi2():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
+
+
+    
+
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -1273,6 +1610,47 @@ def car_racing_multi2():
                     car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
+
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -3749
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -3749
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -2382
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -1459,6 +1837,24 @@ def car_racing_multi3():
     "faixa4": [550, 570, 590]
 }
 
+    slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    slowPU.rect.x = random.randint(135, 570-50)
+    slowPU.rect.y = -3749
+
+
+
+    plus50PU = ScoreBoostPowerUp("img/+50PowerUp.png", 50, 50, 55)
+    plus50PU.rect.x = random.randint(135, 570-50)
+    plus50PU.rect.y = -2382
+
+    shrinkPU = ShrinkPlayerPowerUp("img/ShrinkPowerUp.png", 50, 50, 55)
+    shrinkPU.rect.x = random.randint(135, 570-50)
+    shrinkPU.rect.y = -1557
+
+    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU.rect.x = random.randint(135, 570-50)
+    invencibilityPU.rect.y = -4934
+
     image_paths = ["img/enemymap3.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
@@ -1496,6 +1892,25 @@ def car_racing_multi3():
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
     all_sprites_list.add(car4)
+    all_sprites_list.add(slowPU)
+    all_sprites_list.add(plus50PU)
+    all_sprites_list.add(shrinkPU)
+    all_sprites_list.add(invencibilityPU)
+
+
+    
+
+    powerup1_sprite_list = pygame.sprite.Group()
+    powerup1_sprite_list.add(slowPU)
+
+    powerup2_sprite_list = pygame.sprite.Group()
+    powerup2_sprite_list.add(plus50PU)
+
+    powerup3_sprite_list = pygame.sprite.Group()
+    powerup3_sprite_list.add(shrinkPU)
+
+    powerup4_sprite_list = pygame.sprite.Group()
+    powerup4_sprite_list.add(invencibilityPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -1571,6 +1986,46 @@ def car_racing_multi3():
                     car.changeSpeed(random.randint(70, 115))
                     
                     car.rect.y = -200
+
+            for powerup in powerup1_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -3749
+
+            slowPU.moveForward(speed)
+            if slowPU.rect.y > HEIGHT:
+                 slowPU.rect.x = random.randint(135, 570-50)
+                 slowPU.rect.y = -3749
+
+            for powerup in powerup2_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -2382
+
+            plus50PU.moveForward(speed)
+            if plus50PU.rect.y > HEIGHT:
+                 plus50PU.rect.x = random.randint(135, 570-50)
+                 plus50PU.rect.y = -2382
+
+            for powerup in powerup3_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1557
+
+            shrinkPU.moveForward(speed)
+            if shrinkPU.rect.y > HEIGHT:
+                 shrinkPU.rect.x = random.randint(135, 570-50)
+                 shrinkPU.rect.y = -1557
+
+            for powerup in powerup4_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -4934
+
+            invencibilityPU.moveForward(speed)
+            if invencibilityPU.rect.y > HEIGHT:
+                 invencibilityPU.rect.x = random.randint(135, 570-50)
+                 invencibilityPU.rect.y = -4934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
