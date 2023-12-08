@@ -292,8 +292,7 @@ def draw_map_selection():
     res = (800,600) #setting widht and heigth
     screen = pygame.display.set_mode(res)
     playbuttonmaps = pygame.image.load("img/playbuttonmaps.png")
-    mapsbackground = pygame.transform.scale(pygame.image.load("img/Maps.png"), (res))
-    button_sound = pygame.mixer.Sound("click.wav")
+    mapsbackground = pygame.transform.scale(pygame.image.load("maps.png"), (res))
     #handles the settings window event
     run_map_selection = True
     while run_map_selection:
@@ -310,8 +309,8 @@ def draw_map_selection():
         #draw the diferent maps and a play button on them
         screen.blit(mapsbackground,(0,0))
         screen.blit(playbuttonmaps, (92,330))
-        screen.blit(playbuttonmaps, (357, 330))
-        screen.blit(playbuttonmaps, (626, 330))
+        screen.blit(playbuttonmaps, (358, 330))
+        screen.blit(playbuttonmaps, (628, 330))
 
 
 
