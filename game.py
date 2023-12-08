@@ -174,7 +174,11 @@ def car_racing():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
                 background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -413,7 +417,11 @@ def car_racing2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
                 background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -565,7 +573,7 @@ def car_racing3():
 
     #Allowing the user to close the screen...
     carryOn = True
-    game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
+    game_over_image = pygame.image.load("GAME OVER SAPO.png").convert_alpha()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
@@ -652,7 +660,11 @@ def car_racing3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
+                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
                 background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
