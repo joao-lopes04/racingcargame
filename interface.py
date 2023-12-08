@@ -7,6 +7,7 @@ from game import car_racing, car_racing_multi, car_racing2, car_racing3, car_rac
 def interface():
     # initiating pygames
     pygame.init()
+    pygame.mixer.init
     # creating the screen 900x500 pixels
     WIDTH, HEIGHT = 800, 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -15,13 +16,15 @@ def interface():
     height = screen.get_height()
     # creating some textlabels
     font = pygame.font.SysFont('Anton', 50)
-    
+    #creating some images
     menu_background = pygame.image.load("menubackground.png")
     singleplayerbutton = pygame.image.load("img/singleplayerbutton.png")
     multiplayerbutton = pygame.image.load("img/multiplayerbutton.png")
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
+    button_sound = pygame.mixer.Sound("click.wav")
+
     # interface loop
     while True:
         # getting the input of the user
@@ -30,6 +33,7 @@ def interface():
             if ev.type == pygame.QUIT:
                 pygame.quit()
             # press on quit button
+        #drawing in the screen
         screen.blit(menu_background, (0,0))
         screen.blit(singleplayerbutton,(50,37))
         screen.blit(multiplayerbutton,(270,37))
@@ -52,14 +56,14 @@ def interface():
         if 270 < mouse_x < 270 + multiplayerbutton.get_width() \
                 and 37 < mouse_y < 37 + multiplayerbutton.get_height():
             if click[0] == 1:
-                #menu_sound.stop()
+                
                 car_racing_multi()
                 pass
         #checks if there was a click in the area of this coordinates and if so, opens the maps screen
         if 270 < mouse_x < 270 + mapsbutton.get_width() \
                 and 117< mouse_y < 117 + mapsbutton.get_height():
             if click[0] == 1:
-                
+                button_sound.play()
                 draw_map_selection()
                 
 
@@ -68,6 +72,7 @@ def interface():
         if 50  < mouse_x < 50 + settingsbutton.get_width() \
                 and 117 < mouse_y < 117 + settingsbutton.get_height():
             if click[0] == 1:
+                button_sound.play()
                 credits()
 
         
@@ -82,12 +87,14 @@ def interface():
         if 50 < mouse_x < 50 + singleplayerbutton.get_width() \
                 and 37 < mouse_y < 37 + singleplayerbutton.get_height():
             if click[0] == 1: 
+                
                 car_racing()
 
 
 def interface2():
     # initiating pygames
     pygame.init()
+    pygame.mixer.init()
     # creating the screen 900x500 pixels
     WIDTH, HEIGHT = 800, 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -103,6 +110,7 @@ def interface2():
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
+    button_sound = pygame.mixer.Sound("click.wav")
     # interface loop
     while True:
         # getting the input of the user
@@ -133,14 +141,14 @@ def interface2():
         if 270 < mouse_x < 270 + multiplayerbutton.get_width() \
                 and 37 < mouse_y < 37 + multiplayerbutton.get_height():
             if click[0] == 1:
-                #menu_sound.stop()
+                
                 car_racing_multi2()
                 pass
         #checks if there was a click in the area of this coordinates and if so, opens the maps screen
         if 270 < mouse_x < 270 + mapsbutton.get_width() \
                 and 117< mouse_y < 117 + mapsbutton.get_height():
             if click[0] == 1:
-                
+                button_sound.play()
                 draw_map_selection()
                 
 
@@ -149,6 +157,7 @@ def interface2():
         if 50  < mouse_x < 50 + settingsbutton.get_width() \
                 and 117 < mouse_y < 117 + settingsbutton.get_height():
             if click[0] == 1:
+                button_sound.play
                 credits()
 
         
@@ -168,6 +177,7 @@ def interface2():
 def interface3():
     # initiating pygames
     pygame.init()
+    pygame.mixer.init()
     # creating the screen 900x500 pixels
     WIDTH, HEIGHT = 800, 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -183,6 +193,7 @@ def interface3():
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
+    button_sound = pygame.mixer.Sound("click.wav")
     # interface loop
     while True:
         # getting the input of the user
@@ -220,6 +231,7 @@ def interface3():
         if 270 < mouse_x < 270 + mapsbutton.get_width() \
                 and 117< mouse_y < 117 + mapsbutton.get_height():
             if click[0] == 1:
+                button_sound.play()
                 
                 draw_map_selection()
                 
@@ -229,6 +241,7 @@ def interface3():
         if 50  < mouse_x < 50 + settingsbutton.get_width() \
                 and 117 < mouse_y < 117 + settingsbutton.get_height():
             if click[0] == 1:
+                button_sound.play()
                 credits()
 
         
@@ -268,10 +281,16 @@ def credits():
         pygame.display.update()
 
 def draw_map_selection():
+    pygame.mixer.init()
     res = (800,600)
     screen = pygame.display.set_mode(res)
     playbuttonmaps = pygame.image.load("img/playbuttonmaps.png")
+<<<<<<< HEAD
     mapsbackground = pygame.transform.scale(pygame.image.load("maps.png"), (res))
+=======
+    mapsbackground = pygame.transform.scale(pygame.image.load("img/Maps.png"), (res))
+    button_sound = pygame.mixer.Sound("click.wav")
+>>>>>>> 13f0eb789e2b14f16ddfaaa834090ec5c070e581
     #handles the settings window event
     run_map_selection = True
     while run_map_selection:
@@ -288,8 +307,13 @@ def draw_map_selection():
         #draw the diferent maps and a play button on them
         screen.blit(mapsbackground,(0,0))
         screen.blit(playbuttonmaps, (92,330))
+<<<<<<< HEAD
         screen.blit(playbuttonmaps, (358, 330))
         screen.blit(playbuttonmaps, (628, 330))
+=======
+        screen.blit(playbuttonmaps, (357, 330))
+        screen.blit(playbuttonmaps, (626, 330))
+>>>>>>> 13f0eb789e2b14f16ddfaaa834090ec5c070e581
 
 
 
@@ -308,18 +332,21 @@ def draw_map_selection():
         if 92  < mouse_x < 92 + playbuttonmaps.get_width() \
                 and  330  < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
+                button_sound.play()
                 interface()
                 
         #if there is a click in the area of this coordinates open the ocean menu and adjust the background sounds
         if 357 - playbuttonmaps.get_width() < mouse_x < 357 + playbuttonmaps.get_width() \
                 and  330  < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
+                button_sound.play()
                 interface2()
                 
         #if there is a click in the area of this coordinates open the space menu and adjust the background sounds
         if 627 - playbuttonmaps.get_width() < mouse_x < 627 +  playbuttonmaps.get_width() \
                 and  330 < mouse_y <  330 + playbuttonmaps.get_height():
             if click[0] == 1:
+                button_sound.play()
                 interface3()
                 
 
