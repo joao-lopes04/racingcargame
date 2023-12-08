@@ -8,20 +8,20 @@ global offset_1
 offset_1 = 0
 
 def car_racing():
-
+    #initiating pygame and sound player
     pygame.init()
     pygame.mixer.init()
 
     #loads road image
     road_image = pygame.image.load("img/1 (1).png").convert_alpha()
 
-    WIDTH, HEIGHT = 800, 600
+    WIDTH, HEIGHT = 800, 600 #setting screen mesures
 
     #resize screen
     road_image = pygame.transform.scale(road_image, (WIDTH, HEIGHT))
 
     speed = 0.6
-
+    #creating the player with the class Car
     PlayerCar1 = Car("img/playermap1.png", 100, 100, 70)
     PlayerCar1.rect.x = 160
     PlayerCar1.rect.y = HEIGHT - 100
@@ -37,7 +37,7 @@ def car_racing():
     all_sprites_list = pygame.sprite.Group()
 
     
-
+    #where the enemies will spawn
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
@@ -45,7 +45,10 @@ def car_racing():
     "faixa4": [530, 550, 570]
 }
     
+    #Creating the powerups with their respective classes
+
     slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
+    #where they will spawn
     slowPU.rect.x = random.randint(135, 570-50)
     slowPU.rect.y = -3749
 
@@ -65,6 +68,8 @@ def car_racing():
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
+    #creating the enemies with the class Car
+
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
     car1_lane_start = random.choice(lanes["faixa1"])
     car1.rect.x = car1_lane_start
@@ -72,6 +77,7 @@ def car_racing():
     car1.repaint(random.choice(image_paths))
 
     car2 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
+    #setting the spawn spots
     car2_lane_start = random.choice(lanes["faixa2"])
     car2.rect.x = car2_lane_start
     car2.rect.y = -600
@@ -127,7 +133,7 @@ def car_racing():
 
     #Allowing the user to close the screen...
     carryOn = True
-    
+    #creating score
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
 
@@ -140,15 +146,12 @@ def car_racing():
     powerup2_hit = False
     powerup3_hit = False
     frame_count = 0
-
+    #main loop event
     while carryOn:
             car_sound.play()
             for event in pygame.event.get():
-                if event.type==pygame.QUIT:
+                if event.type==pygame.QUIT: #quit the game
                     carryOn=False
-                elif event.type==pygame.KEYDOWN:
-                    if event.key==pygame.K_x:
-                         PlayerCar1.moveRight(10)
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
@@ -161,7 +164,7 @@ def car_racing():
                  # Limites horizontais para o carro do jogador
                 if PlayerCar1.rect.x > 570:
                     PlayerCar1.rect.x = 570
-
+                #limites verticas para o jogador
             if keys[pygame.K_UP] or keys[pygame.K_w]:
                 PlayerCar1.moveup(5)
                 if PlayerCar1.rect.y < 0:
@@ -174,6 +177,8 @@ def car_racing():
 
         
             #Game Logic
+            #Giving falling movement to enemies and powerups
+
             for car in all_coming_cars:
                 car.moveForward(speed)
                 if car.rect.y > HEIGHT:
@@ -318,9 +323,9 @@ def car_racing():
                         
                     frame_count = 0'''
 
-           
+           #when car collides
             if enemy_hit:
-
+                #ajusting sounds, creating and drawing game over screen
                 car_sound.stop()
                 game_over_sound.play()
                 score_text = font.render(f"SCORE: {score}", 1, "black")
@@ -342,7 +347,7 @@ def car_racing():
                 
 
             all_sprites_list.update()
-
+            #giving the background movement
             global offset_1
 
             #allowing the background to move down
@@ -356,7 +361,7 @@ def car_racing():
             screen.blit(road_image, (0, offset_1))
             screen.blit(road_image, (0, offset_1 - HEIGHT))
             score_text = font.render(f" {score}", 1, "black")
-            
+            #drawing the score
             screen.blit(scorebox, (10,10))
             screen.blit(score_text, (60,45))
             
@@ -377,7 +382,7 @@ def car_racing():
 
             #Number of frames per secong e.g. 60
             clock.tick(60)
-
+    #game over event
     waiting = True
     while waiting:
         for event in pygame.event.get():
@@ -545,10 +550,7 @@ def car_racing2():
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
-                elif event.type==pygame.KEYDOWN:
-                    if event.key==pygame.K_x:
-                         PlayerCar1.moveRight(10)
-
+                
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 PlayerCar1.moveLeft(5)
@@ -874,9 +876,7 @@ def car_racing3():
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     carryOn=False
-                elif event.type==pygame.KEYDOWN:
-                    if event.key==pygame.K_x:
-                         PlayerCar1.moveRight(10)
+                
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
