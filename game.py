@@ -3,14 +3,15 @@ import pygame, random, sys
 from car import Car
 import interface
 
-
+global offset_1
+offset_1 = 0
 
 def car_racing():
 
     pygame.init()
 
     #loads road image
-    road_image = pygame.image.load("img/estrada.png").convert()
+    road_image = pygame.image.load("img/1.png").convert()
 
     WIDTH, HEIGHT = 800, 600
 
@@ -87,8 +88,7 @@ def car_racing():
 
     #Allowing the user to close the screen...
     carryOn = True
-    game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
-    game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
+    
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
     
@@ -171,15 +171,19 @@ def car_racing():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                score_text = font.render(f"{score}", 1, "black")
+                score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
+                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
-                screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200))
-                screen.blit(main_menu, (700,300))
+                screen.blit(play_again, (450, 400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (650,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -191,7 +195,18 @@ def car_racing():
 
             all_sprites_list.update()
 
-            screen.blit(road_image, (0, 0))
+            global offset_1
+
+            #allowing the background to move down
+            offset_1 += 2
+            offset_1 %= HEIGHT
+
+            # cleanig the screen
+            screen.fill((0, 0, 0))
+
+            # drawing the background twice, one above the other
+            screen.blit(road_image, (0, offset_1))
+            screen.blit(road_image, (0, offset_1 - HEIGHT))
             
             #Drawing on Screen
             # Desenha a imagem de fundo
@@ -223,11 +238,11 @@ def car_racing():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         #if the button is pressed the game starts over again
-        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+        if 450  < mouse_x < 450 + play_again.get_width() and 400  < mouse_y < 400 + play_again.get_height():
             if click[0] == 1:
                 car_racing()
         # Check for mouse clicks on "Main Menu" button
-        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
@@ -340,8 +355,8 @@ def car_racing2():
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
-                    PlayerCar1.rect.x = 610
+                if PlayerCar1.rect.x > 560:
+                    PlayerCar1.rect.x = 560
 
             if keys[pygame.K_UP] or keys[pygame.K_w]:
                 PlayerCar1.moveup(5)
@@ -399,16 +414,19 @@ def car_racing2():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                score_text = font.render(f"{score}", 1, "black")
+                score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
+                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
-                screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200))
-                screen.blit(main_menu, (700,300))
-
+                screen.blit(play_again, (450, 400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (650,400))
                 #updates the new screen
                 pygame.display.update()
 
@@ -451,11 +469,11 @@ def car_racing2():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         #if the button is pressed the game starts over again
-        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+        if 450  < mouse_x < 450 + play_again.get_width() and 400  < mouse_y < 400 + play_again.get_height():
             if click[0] == 1:
                 car_racing2()
         # Check for mouse clicks on "Main Menu" button
-        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
@@ -569,8 +587,8 @@ def car_racing3():
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
-                    PlayerCar1.rect.x = 610
+                if PlayerCar1.rect.x > 570:
+                    PlayerCar1.rect.x = 570
 
             if keys[pygame.K_UP] or keys[pygame.K_w]:
                 PlayerCar1.moveup(5)
@@ -628,15 +646,19 @@ def car_racing3():
                     #carryOn = False
                     enemy_hit = True
             if enemy_hit:
-                score_text = font.render(f"{score}", 1, "black")
+                score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
+<<<<<<< HEAD
                 background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+=======
+                background_lost_single = pygame.transform.scale(pygame.image.load("GAME OVER SAPO.png"), (WIDTH, HEIGHT))
+>>>>>>> b9feba06d1a76db2a8901ba5adc436e68f94c8c5
                 
                 screen.blit(background_lost_single, (0,0))
-                screen.blit(play_again, (500, 300))
-                screen.blit(score_text,(600,200))
-                screen.blit(main_menu, (700,300))
+                screen.blit(play_again, (450, 400))
+                screen.blit(score_text,(500,300))
+                screen.blit(main_menu, (650,400))
 
                 #updates the new screen
                 pygame.display.update()
@@ -650,6 +672,7 @@ def car_racing3():
 
             screen.blit(road_image, (0, 0))
             
+            screen
             #Drawing on Screen
             # Desenha a imagem de fundo
             
@@ -680,11 +703,11 @@ def car_racing3():
         mouse_x, mouse_y = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         #if the button is pressed the game starts over again
-        if 500  < mouse_x < 500 + play_again.get_width() and 300  < mouse_y < 300 + play_again.get_height():
+        if 450  < mouse_x < 450 + play_again.get_width() and 400  < mouse_y < 400 + play_again.get_height():
             if click[0] == 1:
                 car_racing3()
         # Check for mouse clicks on "Main Menu" button
-        if 700  < mouse_x < 700 + main_menu.get_width() and 300  < mouse_y < 300 + main_menu.get_height():
+        if 650  < mouse_x < 650 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 # Return to the main menu 
                 waiting = False  # Exit the waiting loop and return to the main menu
@@ -892,7 +915,7 @@ def car_racing_multi():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREEN WINS!.png")
+                background_lost_multi = pygame.image.load("GREEN WINS.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -917,7 +940,7 @@ def car_racing_multi():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("RED WINS!.png")
+                background_lost_multi = pygame.image.load("RED WINS.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1096,8 +1119,8 @@ def car_racing_multi2():
             if keys[pygame.K_RIGHT]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
-                    PlayerCar1.rect.x = 610
+                if PlayerCar1.rect.x > 560:
+                    PlayerCar1.rect.x = 560
 
             if keys[pygame.K_UP]:
                 PlayerCar1.moveup(5)
@@ -1116,8 +1139,8 @@ def car_racing_multi2():
             if keys[pygame.K_d]:
                 PlayerCar2.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar2.rect.x > 610:
-                    PlayerCar2.rect.x = 610
+                if PlayerCar2.rect.x > 560:
+                    PlayerCar2.rect.x = 560
 
             if keys[pygame.K_w]:
                 PlayerCar2.moveup(5)
@@ -1178,7 +1201,7 @@ def car_racing_multi2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREEN WINS!.png")
+                background_lost_multi = pygame.image.load("GREENWINS_sea (1).png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1203,7 +1226,7 @@ def car_racing_multi2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("RED WINS!.png")
+                background_lost_multi = pygame.image.load("REDWINS_sea.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1383,8 +1406,8 @@ def car_racing_multi3():
             if keys[pygame.K_RIGHT]:
                 PlayerCar1.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar1.rect.x > 610:
-                    PlayerCar1.rect.x = 610
+                if PlayerCar1.rect.x > 570:
+                    PlayerCar1.rect.x = 570
 
             if keys[pygame.K_UP]:
                 PlayerCar1.moveup(5)
@@ -1403,8 +1426,8 @@ def car_racing_multi3():
             if keys[pygame.K_d]:
                 PlayerCar2.moveRight(5)
                  # Limites horizontais para o carro do jogador
-                if PlayerCar2.rect.x > 610:
-                    PlayerCar2.rect.x = 610
+                if PlayerCar2.rect.x > 570:
+                    PlayerCar2.rect.x = 570
 
             if keys[pygame.K_w]:
                 PlayerCar2.moveup(5)
@@ -1465,7 +1488,7 @@ def car_racing_multi3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREEN WINS!.png")
+                background_lost_multi = pygame.image.load("GREENWINS_space.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1490,7 +1513,7 @@ def car_racing_multi3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("RED WINS!.png")
+                background_lost_multi = pygame.image.load("REDWINS_space.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
