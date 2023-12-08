@@ -41,13 +41,8 @@ def car_racing():
     lanes = {
     "faixa1": [180, 190, 205],
     "faixa2": [290, 305, 320],
-<<<<<<< HEAD
     "faixa3": [440, 450, 465],
     "faixa4": [530, 550, 570]
-=======
-    "faixa3": [440, 450, 470],
-    "faixa4": [550, 570, 590]
->>>>>>> 465eae63a1f3f7ed68ea88019384b3ba1cf67331
 }
     
     slowPU = SlowPowerUp("img/SlowPowerUp.png", 50, 50, 55)
