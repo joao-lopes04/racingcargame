@@ -3,108 +3,37 @@ import random
 import time
 from abc import ABC, abstractmethod
 
+class PowerUp(ABC):
+  def __init__(self, image, pu_duration):
+    self.image = image
+    self.pu_duration = pu_duration
 
 
-'''class PowerUp(ABC):
-    def __init__(self, image):
-        self.image = image
-        self.active = False
-
-    @abstractmethod
-    def affect_player(self, player):
-        pass
-
-    @abstractmethod
-    def affect_traffic(self, traffic):
-        pass'''
-
-
-class SlowPowerUp(pygame.sprite.Sprite):
-    def __init__(self, image_path, width, height, speed):
-       super().__init__()
-       self.image = pygame.transform.scale(pygame.image.load(image_path), (width, height))
-       self.width = width
-       self.height =  height
-       self.speed = speed
-       
-       self.rect = self.image.get_rect()
-
-
-
-
-    def affect_player(self, player):
-        
-        # Implement slowing down the player
-        pass
-
-    def affect_traffic(self, speed):
-        # Implement slowing down the traffic
-        self.speed = speed
+class PUslow(PowerUp):
+  def __init__():
+    super().__init__()
+    self.image = pygame.image.load("img/SlowPowerUp")
+    self.pu_duration = 420
     
-    def moveForward(self, speed):
-        self.rect.y += self.speed * speed / 20
-    
-
-class InvincibilityPowerUp(pygame.sprite.Sprite):
-    def __init__(self, image, width, height, speed):
-       super().__init__()
-       self.image = pygame.image.load(image)
-       self.width = width
-       self.height =  height
-       self.speed = speed
-       
-       self.rect = self.image.get_rect()
-
-    
-    def affect_player(self, player):
-        # Implement invincibility for player
-        pass
-
-    def affect_traffic(self, traffic):
-        # No effect on traffic
-        pass
-    
-    def moveForward(self, speed):
-        self.rect.y += self.speed * speed / 20 
+  def apply(self, ):
+    self.enemy_velocity = 2
 
 
-
-class ScoreBoostPowerUp(pygame.sprite.Sprite):
-    def __init__(self, image_path, width, height, speed):
-       super().__init__()
-       self.image = pygame.image.load(image_path)
-       self.width = width
-       self.height =  height
-       self.speed = speed
-       
-       self.rect = self.image.get_rect()
-
-    
-    def affect_score(self, score):
-        # Implement a boost in the score
-        score += score
-    
-    def moveForward(self, speed):
-        self.rect.y += self.speed * speed / 20
+class PU50(PowerUp):
+  def __init__():
+    super().__init__()
+    self.image = pygame.image.load("img/+50PowerUp")
 
 
+class PUshrink(PowerUp):
+  def __init__():
+    super().__init__()
+    self.image = pygame.image.load("img/ShrinkPowerUp")
+    self.pu_duration = 420
 
-class ShrinkPlayerPowerUp(pygame.sprite.Sprite):
-    def __init__(self, image, width, height, speed):
-       super().__init__()
-       self.image = pygame.image.load(image)
-       self.width = width
-       self.height =  height
-       self.speed = speed
-       
-       self.rect = self.image.get_rect()
 
-    def affect_player(self, width, height):
-        self.width = width
-        self.height = height
-        
-
-    def moveForward(self, speed):
-        self.rect.y += self.speed * speed / 20
-    
-
+class PUinvencibility(PowerUp):
+  def __init__():
+    super().__init__()
+    self.image = pygame.image.load("img/InvencibilityPowerUp")
+    self.pu_duration = 420

@@ -137,7 +137,7 @@ def car_racing():
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
 
-    car_sound = pygame.mixer.Sound("sounds/engine.wav")
+    car_sound = pygame.mixer.Sound("sounds/carengine.wav")
     game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
     button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
