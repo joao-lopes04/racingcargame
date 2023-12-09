@@ -292,7 +292,7 @@ def interface3():
 def credits():
     res = (800, 600) #setting width and height
     screen = pygame.display.set_mode(res)
-    settings_background = pygame.image.load("img/Settings (2).png")
+    settings_background = pygame.image.load("img/Settings (3).png")
     run_instructions = True
     #handeling the setting window loop event
     while run_instructions:
