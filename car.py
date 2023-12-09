@@ -11,8 +11,9 @@ class Car(pygame.sprite.Sprite):
         # Pass in the color of the car, and its x and y position, width and height.
         # Set the background color and set it to be transparent
         self.image = pygame.image.load(image_path).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (width, height))
         self.rect = self.image.get_rect()
+        
+        
 
 
         #Initialise attributes of the car.
@@ -24,7 +25,7 @@ class Car(pygame.sprite.Sprite):
         # self.image = pygame.image.load("car.png").convert_alpha()
 
         # Fetch the rectangle object that has the dimensions of the image.
-        self.rect = self.image.get_rect()
+        
 
     def moveRight(self, pixels):
         self.rect.x += pixels
@@ -46,6 +47,10 @@ class Car(pygame.sprite.Sprite):
 
     def changeSpeed(self, speed):
         self.speed = speed
+
+    def changedimensions(self, width, height):
+        self.width = width
+        self.height = height
 
     def repaint(self, image_path):
         self.image = pygame.image.load(image_path).convert_alpha()
