@@ -1,13 +1,34 @@
 import pygame, random, sys
 #Let's import the Car Class
 from car import Car
-from powerup import SlowPowerUp, ScoreBoostPowerUp, ShrinkPlayerPowerUp
+from powerup import SlowPowerUp, ScoreBoostPowerUp, ShrinkPlayerPowerUp, InvencibilityPowerUp, SuperSpeedPowerUp
 import interface
 
 global offset_1
 offset_1 = 0
 
 def car_racing():
+
+    """
+    Runs the car racing game.
+
+    Initializes the Pygame environment and renders the racing game screen. This function sets up the player's car,
+    multiple enemy cars, power-ups, and handles user input for controlling the player's car movement.
+
+    Modules Used:
+    - Pygame: Controls GUI rendering, user input, screen updates, and sprites.
+
+    Characteristics:
+    - Handles the game's main loop, allowing the player's car to move horizontally and vertically.
+    - Manages the falling movement of enemy cars and power-ups.
+    - Detects collisions between the player's car and enemy cars or power-ups.
+    - Activates different power-ups when collided, altering the player's car behavior temporarily.
+    - Ends the game when the player's car collides with an enemy car, displaying a game over screen with options to restart or return to the main menu.
+    - Uses sound effects for car engine, game over, and button clicks.
+    - Handles mouse clicks on the game over screen for restart or main menu navigation.
+
+    """
+
     #initiating pygame and sound player
     pygame.init()
     pygame.mixer.init()
@@ -62,9 +83,13 @@ def car_racing():
     shrinkPU.rect.x = random.randint(135, 570-50)
     shrinkPU.rect.y = -1557
 
-    invencibilityPU = ShrinkPlayerPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
+    invencibilityPU = InvencibilityPowerUp("img/InvencibilityPowerUp.png", 50, 50, 55)
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
+
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
 
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
@@ -109,6 +134,7 @@ def car_racing():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -124,6 +150,9 @@ def car_racing():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -146,6 +175,7 @@ def car_racing():
     powerup2_hit = False
     powerup3_hit = False
     powerup4_hit = False
+    powerup5_hit = False
     frame_count = 0
     #main loop event
     while carryOn:
@@ -228,6 +258,17 @@ def car_racing():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
+
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
+
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
                    score +=1
@@ -281,6 +322,10 @@ def car_racing():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit = True
 
             powerup1_active = False
             powerup_duration = 300
@@ -349,6 +394,69 @@ def car_racing():
                     
                     
                     powerup4_hit = False
+                    
+                    frame_count = 0
+
+            
+
+            powerup5_active = False
+            if powerup5_hit:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                powerup5_active = True
+                
+                
+
+            if powerup5_active:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP] or keys[pygame.K_w]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP] or keys[pygame.K_w]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/playermap1.png")
+                    powerup5_hit = False
                     
                     frame_count = 0
 
@@ -496,6 +604,10 @@ def car_racing2():
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
 
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
+
     image_paths = ["img/enemymap2.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70, 115))
@@ -536,6 +648,7 @@ def car_racing2():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -551,6 +664,9 @@ def car_racing2():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
 
     all_coming_cars = pygame.sprite.Group()
@@ -654,7 +770,15 @@ def car_racing2():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
 
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
 
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
@@ -708,6 +832,71 @@ def car_racing2():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit = True
+
+            powerup5_active = False
+            if powerup5_hit:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpYellowBoatSinglePlayer.png")
+                powerup5_active = True
+                
+                
+
+            if powerup5_active:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP] or keys[pygame.K_w]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP] or keys[pygame.K_w]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/playermap2.png")
+                    powerup5_hit = False
+                    
+                    frame_count = 0
 
             powerup1_active = False
             powerup_duration = 300
@@ -915,6 +1104,9 @@ def car_racing3():
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
 
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
 
     image_paths = ["img/enemymap3.png"]
 
@@ -956,6 +1148,7 @@ def car_racing3():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -971,6 +1164,9 @@ def car_racing3():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -1075,6 +1271,17 @@ def car_racing3():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
+
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
+
+
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
                    score +=1
@@ -1127,6 +1334,71 @@ def car_racing3():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit = True
+
+            powerup5_active = False
+            if powerup5_hit:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpYellowSpaceShipSinglePlayer.png")
+                powerup5_active = True
+                
+                
+
+            if powerup5_active:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP] or keys[pygame.K_w]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP] or keys[pygame.K_w]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/playermap3.png")
+                    powerup5_hit = False
+                    
+                    frame_count = 0
 
             powerup1_active = False
             powerup_duration = 300
@@ -1349,6 +1621,10 @@ def car_racing_multi():
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
 
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
+
     image_paths = ["img/carro random.png", "img/carro random2.png", "img/carro random3.png", "img/carro random4.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
@@ -1381,7 +1657,6 @@ def car_racing_multi():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
-    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -1390,6 +1665,7 @@ def car_racing_multi():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -1405,6 +1681,9 @@ def car_racing_multi():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -1434,6 +1713,8 @@ def car_racing_multi():
     powerup3_hit2= False
     powerup4_hit= False
     powerup4_hit2= False
+    powerup5_hit1 = False
+    powerup5_hit2 = False
     frame_count = 0
     while carryOn:
             car_sound.play()
@@ -1533,6 +1814,17 @@ def car_racing_multi():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
+
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
+
+
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
                    score += 1
@@ -1585,6 +1877,71 @@ def car_racing_multi():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit1 = True
+
+            powerup5_active1 = False
+            if powerup5_hit1:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpRedCarMultilayer.png")
+                powerup5_active1 = True
+                
+                
+
+            if powerup5_active1:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active1 = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player1map1.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active = False
             powerup_duration = 300
@@ -1706,6 +2063,72 @@ def car_racing_multi():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar2, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit2 = True
+
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar2, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit2 = True
+
+            powerup5_active2 = False
+            if powerup5_hit2:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar2.repaint("img/PowerUpGreenCarMultiplayer.png")
+                powerup5_active2 = True
+                
+                
+
+            if powerup5_active2:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(10)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(10)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active2 = False
+                    keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(5)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(5)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player2map1.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active2 = False
             powerup_duration = 300
@@ -1927,6 +2350,10 @@ def car_racing_multi2():
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
 
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
+
     image_paths = ["img/enemymap2.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
@@ -1959,7 +2386,6 @@ def car_racing_multi2():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
-    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -1968,6 +2394,7 @@ def car_racing_multi2():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -1983,6 +2410,9 @@ def car_racing_multi2():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -2110,6 +2540,17 @@ def car_racing_multi2():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
+
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
+
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
                    score += 1
@@ -2161,6 +2602,71 @@ def car_racing_multi2():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit1 = True
+
+            powerup5_active1 = False
+            if powerup5_hit1:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpYellowBoatMultiplayer.png")
+                powerup5_active1 = True
+                
+                
+
+            if powerup5_active1:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active1 = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player1map2.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active = False
             powerup_duration = 300
@@ -2283,6 +2789,71 @@ def car_racing_multi2():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar2, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit2 = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar2, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit2 = True
+
+            powerup5_active2 = False
+            if powerup5_hit2:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar2.repaint("img/PowerUpGreenBoatMultiplayer.png")
+                powerup5_active2 = True
+                
+                
+
+            if powerup5_active2:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(10)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(10)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active2 = False
+                    keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(5)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(5)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player2map2.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active2 = False
             powerup_duration = 300
@@ -2504,6 +3075,10 @@ def car_racing_multi3():
     invencibilityPU.rect.x = random.randint(135, 570-50)
     invencibilityPU.rect.y = -4934
 
+    superspeedPU = SuperSpeedPowerUp("img/SuperSpeedPD.png", 50, 50, 55)
+    superspeedPU.rect.x = random.randint(135, 570-50)
+    superspeedPU.rect.y = -1934
+
     image_paths = ["img/enemymap3.png"]
 
     car1 = Car(random.choice(image_paths), 60, 100, random.randint(70,115))
@@ -2536,7 +3111,6 @@ def car_racing_multi3():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
-    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -2545,6 +3119,7 @@ def car_racing_multi3():
     all_sprites_list.add(plus50PU)
     all_sprites_list.add(shrinkPU)
     all_sprites_list.add(invencibilityPU)
+    all_sprites_list.add(superspeedPU)
 
 
     
@@ -2560,6 +3135,9 @@ def car_racing_multi3():
 
     powerup4_sprite_list = pygame.sprite.Group()
     powerup4_sprite_list.add(invencibilityPU)
+
+    powerup5_sprite_list = pygame.sprite.Group()
+    powerup5_sprite_list.add(superspeedPU)
 
     all_coming_cars = pygame.sprite.Group()
     all_coming_cars.add(car1)
@@ -2687,6 +3265,16 @@ def car_racing_multi3():
                  invencibilityPU.rect.x = random.randint(135, 570-50)
                  invencibilityPU.rect.y = -4934
 
+            for powerup in powerup5_sprite_list:
+                 powerup.moveForward(speed)
+                 if powerup.rect.y > HEIGHT:
+                      powerup.rect.y = -1934
+
+            superspeedPU.moveForward(speed)
+            if superspeedPU.rect.y > HEIGHT:
+                 superspeedPU.rect.x = random.randint(135, 570-50)
+                 superspeedPU.rect.y = -1934
+
             car1.moveForward(speed)
             if car1.rect.y > HEIGHT:
                    score += 1
@@ -2738,6 +3326,71 @@ def car_racing_multi3():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar1, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar1, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit1 = True
+
+            powerup5_active1 = False
+            if powerup5_hit1:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar1.repaint("img/PowerUpRedSpaceShipMultiplayer.png")
+                powerup5_active1 = True
+                
+                
+
+            if powerup5_active1:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LEFT]:
+                    PlayerCar1.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x < 135:
+                        PlayerCar1.rect.x = 135
+                if keys[pygame.K_RIGHT]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar1.rect.x > 570:
+                        PlayerCar1.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_UP]:
+                    PlayerCar1.moveup(10)
+                    if PlayerCar1.rect.y < 0:
+                        PlayerCar1.rect.y = 0
+                if keys[pygame.K_DOWN]:
+                    PlayerCar1.movedown(10)
+                    if PlayerCar1.rect.y > 500:
+                        PlayerCar1.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active1 = False
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LEFT]:
+                        PlayerCar1.moveLeft(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x < 135:
+                            PlayerCar1.rect.x = 135
+                    if keys[pygame.K_RIGHT]:
+                        PlayerCar1.moveRight(5)
+                        # Limites horizontais para o carro do jogador
+                        if PlayerCar1.rect.x > 570:
+                            PlayerCar1.rect.x = 570
+                        #limites verticas para o jogador
+                    if keys[pygame.K_UP]:
+                        PlayerCar1.moveup(5)
+                        if PlayerCar1.rect.y < 0:
+                            PlayerCar1.rect.y = 0
+                    if keys[pygame.K_DOWN]:
+                        PlayerCar1.movedown(5)
+                        if PlayerCar1.rect.y > 500:
+                            PlayerCar1.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player1map3.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active = False
             powerup_duration = 300
@@ -2853,6 +3506,71 @@ def car_racing_multi3():
             car_collision_powerup4 = pygame.sprite.spritecollide(PlayerCar2, powerup4_sprite_list, False, pygame.sprite.collide_mask)
             for powerup in car_collision_powerup4:
                 powerup4_hit2 = True
+
+            car_collision_powerup5 = pygame.sprite.spritecollide(PlayerCar2, powerup5_sprite_list, False, pygame.sprite.collide_mask)
+            for powerup in car_collision_powerup5:
+                powerup5_hit2 = True
+
+            powerup5_active2 = False
+            if powerup5_hit2:
+
+                #all_sprites_list.remove(shrinkPU)
+                PlayerCar2.repaint("img/PowerUpGreenSpaceShipMultiplayer.png")
+                powerup5_active2 = True
+                
+                
+
+            if powerup5_active2:
+                frame_count += 1
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(10)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(10)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(10)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    #all_sprites_list.add(shrinkPU)
+
+                if frame_count >= powerup_duration:
+                    powerup5_active2 = False
+                    keys = pygame.key.get_pressed()
+                if keys[pygame.K_a]:
+                    PlayerCar2.moveLeft(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x < 135:
+                        PlayerCar2.rect.x = 135
+                if keys[pygame.K_d]:
+                    PlayerCar1.moveRight(5)
+                    # Limites horizontais para o carro do jogador
+                    if PlayerCar2.rect.x > 570:
+                        PlayerCar2.rect.x = 570
+                    #limites verticas para o jogador
+                if keys[pygame.K_w]:
+                    PlayerCar2.moveup(5)
+                    if PlayerCar2.rect.y < 0:
+                        PlayerCar2.rect.y = 0
+                if keys[pygame.K_s]:
+                    PlayerCar2.movedown(5)
+                    if PlayerCar2.rect.y > 500:
+                        PlayerCar2.rect.y = 500
+                    
+                    PlayerCar1.repaint("img/player2map3.png")
+                    powerup5_hit1 = False
+                    
+                    frame_count = 0
 
             powerup1_active2 = False
             powerup_duration = 300

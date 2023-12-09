@@ -5,6 +5,32 @@ from game import car_racing, car_racing_multi, car_racing2, car_racing3, car_rac
 
 # Creating a function that creates the GUI
 def interface():
+
+    """
+    Displays the main menu interface.
+
+    This function initializes the Pygame environment and renders the main menu screen.
+    It handles user input for different menu options such as single player, multiplayer,
+    settings, maps selection, and exit. Based on user clicks, it navigates to various
+    screens or triggers specific actions.
+
+    Notes:
+    - The function waits for user input indefinitely until a specific action is triggered.
+    - Clicks on different buttons navigate to respective functionalities.
+
+    Modules Used:
+    - Pygame: Handles GUI rendering, mouse input, and screen updates.
+    - SysFont from Pygame: Generates text labels for menu options.
+    - Mixer from Pygame: Controls sound effects for button clicks.
+
+    Characteristics:
+    - Waits for user input and processes clicks on menu buttons.
+    - Renders the main menu interface with various buttons.
+    - Provides options to navigate to different screens or trigger specific game actions.
+    - Handles quitting the game when the exit button is clicked.
+
+    """
+
     # initiating pygames
     pygame.init()
     #initiating sound player
@@ -266,7 +292,7 @@ def interface3():
 def credits():
     res = (800, 600) #setting width and height
     screen = pygame.display.set_mode(res)
-    settings_background = pygame.image.load("img/Settings (1).png")
+    settings_background = pygame.image.load("img/Settings (2).png")
     run_instructions = True
     #handeling the setting window loop event
     while run_instructions:
