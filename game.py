@@ -691,6 +691,7 @@ def car_racing2():
     powerup2_hit = False
     powerup3_hit = False
     powerup4_hit = False
+    powerup5_hit = False
     frame_count = 0
 
     while carryOn:
@@ -1190,6 +1191,7 @@ def car_racing3():
     powerup2_hit = False
     powerup3_hit = False
     powerup4_hit = False
+    powerup5_hit  = False
     frame_count = 0
 
     while carryOn:
@@ -1657,6 +1659,7 @@ def car_racing_multi():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
+    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -1886,7 +1889,7 @@ def car_racing_multi():
             if powerup5_hit1:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpRedCarMultilayer.png")
+                PlayerCar1.repaint("img/PowerUpRedCarMultiplayer.png")
                 powerup5_active1 = True
                 
                 
@@ -2386,6 +2389,7 @@ def car_racing_multi2():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
+    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -2441,6 +2445,8 @@ def car_racing_multi2():
     powerup3_hit2= False
     powerup4_hit= False
     powerup4_hit2= False
+    powerup5_hit1 = False
+    powerup5_hit2 = False
     frame_count = 0
     while carryOn:
             boat_sound.play()
@@ -2611,7 +2617,7 @@ def car_racing_multi2():
             if powerup5_hit1:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowBoatMultiplayer.png")
+                PlayerCar1.repaint("img/PowerUpRedBoatMultiplayer.png")
                 powerup5_active1 = True
                 
                 
@@ -3111,6 +3117,7 @@ def car_racing_multi3():
 
     # Add the car to the list of objects
     all_sprites_list.add(PlayerCar1)
+    all_sprites_list.add(PlayerCar2)
     all_sprites_list.add(car1)
     all_sprites_list.add(car2)
     all_sprites_list.add(car3)
@@ -3166,6 +3173,8 @@ def car_racing_multi3():
     powerup3_hit2= False
     powerup4_hit= False
     powerup4_hit2= False
+    powerup5_hit1 = False
+    powerup5_hit2 = False
     frame_count = 0
 
     while carryOn:
