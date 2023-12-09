@@ -48,7 +48,7 @@ class SlowPowerUp(pygame.sprite.Sprite):
 class InvincibilityPowerUp(pygame.sprite.Sprite):
     def __init__(self, image, width, height, speed):
        super().__init__()
-       self.image = pygame.image.load("img/SlowPowerUp.png")
+       self.image = pygame.image.load(image)
        self.width = width
        self.height =  height
        self.speed = speed

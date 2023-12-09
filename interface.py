@@ -18,13 +18,13 @@ def interface():
     # creating some textlabels
     font = pygame.font.SysFont('Anton', 50)
     #creating some images
-    menu_background = pygame.image.load("menubackground.png")
+    menu_background = pygame.image.load("img/menubackground.png")
     singleplayerbutton = pygame.image.load("img/singleplayerbutton.png")
     multiplayerbutton = pygame.image.load("img/multiplayerbutton.png")
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
-    button_sound = pygame.mixer.Sound("click.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
 
     # interface loop
     while True:
@@ -112,7 +112,7 @@ def interface2():
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
-    button_sound = pygame.mixer.Sound("click.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     # interface loop
     while True:
         # getting the input of the user
@@ -197,7 +197,7 @@ def interface3():
     settingsbutton = pygame.image.load("img/settingsbutton.png")
     mapsbutton = pygame.image.load("img/mapsbutton.png")
     exitbutton = pygame.image.load("img/exitbutton.png")
-    button_sound = pygame.mixer.Sound("click.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     # interface loop
     while True:
         # getting the input of the user
@@ -266,7 +266,7 @@ def interface3():
 def credits():
     res = (800, 600) #setting width and height
     screen = pygame.display.set_mode(res)
-    settings_background = pygame.image.load("Settings (1).png")
+    settings_background = pygame.image.load("img/Settings (1).png")
     run_instructions = True
     #handeling the setting window loop event
     while run_instructions:
@@ -292,8 +292,8 @@ def draw_map_selection():
     res = (800,600) #setting widht and heigth
     screen = pygame.display.set_mode(res)
     playbuttonmaps = pygame.image.load("img/playbuttonmaps.png")
-    mapsbackground = pygame.transform.scale(pygame.image.load("maps.png"), (res))
-    button_sound = pygame.mixer.Sound("click.wav")
+    mapsbackground = pygame.transform.scale(pygame.image.load("img/Maps.png"), (res))
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     #handles the settings window event
     run_map_selection = True
     while run_map_selection:

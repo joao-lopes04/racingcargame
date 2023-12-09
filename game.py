@@ -137,9 +137,9 @@ def car_racing():
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
 
-    car_sound = pygame.mixer.Sound("engine.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    car_sound = pygame.mixer.Sound("sounds/engine.wav")
+    game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit = False
     powerup1_hit = False
@@ -261,7 +261,7 @@ def car_racing():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit = True
@@ -362,7 +362,7 @@ def car_racing():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+                background_lost_single = pygame.image.load("img/GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -430,18 +430,14 @@ def car_racing():
         #if the button is pressed the game starts over again
         if 450  < mouse_x < 450 + play_again.get_width() and 400  < mouse_y < 400 + play_again.get_height():
             if click[0] == 1:
-                '''PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
-                for car in all_coming_cars:
-                    car.changeSpeed(random.randint(70, 115))'''
+                
                 car_racing()
         # Check for mouse clicks on "Main Menu" button
         if 600  < mouse_x < 600 + main_menu.get_width() and 400  < mouse_y < 400 + main_menu.get_height():
             if click[0] == 1:
                 button_sound.play()
                 # Return to the main menu 
-                '''PlayerCar1 = Car("img/PowerUpYellowCarSinglePlayer.png",100,100,70)
-                for car in all_coming_cars:
-                    car.changeSpeed(random.randint(70, 115))'''
+                
                 waiting = False  # Exit the waiting loop and return to the main menu
                 interface.interface()
 
@@ -570,9 +566,9 @@ def car_racing2():
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
-    boat_sound = pygame.mixer.Sound("boataudio.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    boat_sound = pygame.mixer.Sound("sounds/boataudio.wav")
+    game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit = False
     powerup1_hit = False
@@ -692,7 +688,7 @@ def car_racing2():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit = True
@@ -716,7 +712,7 @@ def car_racing2():
             powerup1_active = False
             powerup_duration = 300
             if powerup1_hit:
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowBoatSinglePlayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active = True
                 
@@ -729,7 +725,7 @@ def car_racing2():
 
                 if frame_count >= powerup_duration:
                     powerup1_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap2.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -743,7 +739,7 @@ def car_racing2():
             powerup3_active = False
             if powerup3_hit:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowBoatSinglePlayer.png")
                 powerup3_active = True
                 
                 
@@ -755,7 +751,7 @@ def car_racing2():
 
                 if frame_count >= powerup_duration:
                     powerup3_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap2.png")
                     
                     PlayerCar1.changedimensions(100,100)
                     powerup3_hit = False
@@ -764,7 +760,7 @@ def car_racing2():
             if powerup4_hit:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowBoatSinglePlayer.png")
                 powerup4_active = True
                 
                 
@@ -776,7 +772,7 @@ def car_racing2():
 
                 if frame_count >= powerup_duration:
                     powerup4_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap2.png")
                     
                     
                     powerup4_hit = False
@@ -790,7 +786,7 @@ def car_racing2():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+                background_lost_single = pygame.image.load("img/GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -985,13 +981,13 @@ def car_racing3():
 
     #Allowing the user to close the screen...
     carryOn = True
-    game_over_image = pygame.image.load("GAME OVER SAPO.png").convert_alpha()
+    game_over_image = pygame.image.load("img/GAME OVER SAPO.png").convert_alpha()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
     score = 0
-    spaceship_sound = pygame.mixer.Sound("engine space.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    spaceship_sound = pygame.mixer.Sound("sounds/engine space.wav")
+    game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit = False
     powerup1_hit = False
@@ -1111,7 +1107,7 @@ def car_racing3():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit = True
@@ -1135,7 +1131,7 @@ def car_racing3():
             powerup1_active = False
             powerup_duration = 300
             if powerup1_hit:
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowSpaceShipSinglePlayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active = True
                 
@@ -1148,7 +1144,7 @@ def car_racing3():
 
                 if frame_count >= powerup_duration:
                     powerup1_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap3.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -1162,7 +1158,7 @@ def car_racing3():
             powerup3_active = False
             if powerup3_hit:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowSpaceShipSinglePlayer.png")
                 powerup3_active = True
                 
                 
@@ -1174,7 +1170,7 @@ def car_racing3():
 
                 if frame_count >= powerup_duration:
                     powerup3_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap3.png")
                     
                     PlayerCar1.changedimensions(100,100)
                     powerup3_hit = False
@@ -1183,7 +1179,7 @@ def car_racing3():
             if powerup4_hit:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpYellowSpaceShipSinglePlayer.png")
                 powerup4_active = True
                 
                 
@@ -1195,7 +1191,7 @@ def car_racing3():
 
                 if frame_count >= powerup_duration:
                     powerup4_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/playermap3.png")
                     
                     
                     powerup4_hit = False
@@ -1208,7 +1204,7 @@ def car_racing3():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_single = pygame.image.load("GAME OVER SAPO.png")
+                background_lost_single = pygame.image.load("img/GAME OVER SAPO.png")
                 
                 screen.blit(background_lost_single, (0,0))
                 screen.blit(play_again, (450, 400))
@@ -1424,9 +1420,9 @@ def car_racing_multi():
     scorebox = pygame.image.load("img/scorebox2.png")
     
     score = 0
-    car_sound = pygame.mixer.Sound("engine.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
-    button_sound = pygame.mixer.Sound("click.wav")
+    car_sound = pygame.mixer.Sound("sounds/engine.wav")
+    game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
@@ -1569,7 +1565,7 @@ def car_racing_multi():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     enemy_hit1 = True
 
@@ -1593,7 +1589,7 @@ def car_racing_multi():
             powerup1_active = False
             powerup_duration = 300
             if powerup1_hit:
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedCarMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active = True
                 
@@ -1606,7 +1602,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup1_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map1.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -1620,7 +1616,7 @@ def car_racing_multi():
             powerup3_active = False
             if powerup3_hit:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedCarMultiplayer.png")
                 powerup3_active = True
                 
                 
@@ -1632,7 +1628,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup3_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map1.png")
                     
                     PlayerCar1.changedimensions(100,100)
                     powerup3_hit = False
@@ -1641,7 +1637,7 @@ def car_racing_multi():
             if powerup4_hit:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedCarMultiplayer.png")
                 powerup4_active = True
                 
                 
@@ -1653,7 +1649,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup4_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map1.png")
                     
                     
                     powerup4_hit = False
@@ -1666,7 +1662,7 @@ def car_racing_multi():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("GREEN WINS.png")
+                background_lost_multi = pygame.image.load("img/GREEN WINS.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -1682,14 +1678,14 @@ def car_racing_multi():
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit2 = True
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit2 = True
@@ -1714,7 +1710,7 @@ def car_racing_multi():
             powerup1_active2 = False
             powerup_duration = 300
             if powerup1_hit2:
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenCarMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active2 = True
                 
@@ -1727,7 +1723,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup1_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map1.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -1741,7 +1737,7 @@ def car_racing_multi():
             powerup3_active2 = False
             if powerup3_hit2:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenCarMultiplayer.png")
                 powerup3_active2 = True
                 
                 
@@ -1753,7 +1749,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup3_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map1.png")
                     
                     PlayerCar2.changedimensions(100,100)
                     powerup3_hit2 = False
@@ -1762,7 +1758,7 @@ def car_racing_multi():
             if powerup4_hit2:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenCarMultiplayer.png")
                 powerup4_active2 = True
                 
                 
@@ -1774,7 +1770,7 @@ def car_racing_multi():
 
                 if frame_count >= powerup_duration:
                     powerup4_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map1.png")
                     
                     
                     powerup4_hit2 = False
@@ -1787,7 +1783,7 @@ def car_racing_multi():
                 score_text = font.render(f"SCORE: {score}", 1, "black")
                 play_again = pygame.image.load("img/Play Again Button.png")
                 main_menu = pygame.image.load("img/Menu Button.png")
-                background_lost_multi = pygame.image.load("RED WINS.png")
+                background_lost_multi = pygame.image.load("img/RED WINS.png")
                 
                 screen.blit(background_lost_multi, (0,0))
                 
@@ -2000,10 +1996,10 @@ def car_racing_multi2():
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
-    boat_sound = pygame.mixer.Sound("boataudio.wav")
-    game_over_sound  = pygame.mixer.Sound("gameoveraudio.wav")
+    boat_sound = pygame.mixer.Sound("sounds/boataudio.wav")
+    game_over_sound  = pygame.mixer.Sound("sounds/gameoveraudio.wav")
     score = 0
-    button_sound = pygame.mixer.Sound("click.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
@@ -2146,7 +2142,7 @@ def car_racing_multi2():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     enemy_hit1 = True
 
@@ -2169,7 +2165,7 @@ def car_racing_multi2():
             powerup1_active = False
             powerup_duration = 300
             if powerup1_hit:
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedBoatMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active = True
                 
@@ -2182,7 +2178,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup1_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map2.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -2196,7 +2192,7 @@ def car_racing_multi2():
             powerup3_active = False
             if powerup3_hit:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedBoatMultiplayer.png")
                 powerup3_active = True
                 
                 
@@ -2208,7 +2204,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup3_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map2.png")
                     
                     PlayerCar1.changedimensions(100,100)
                     powerup3_hit = False
@@ -2217,7 +2213,7 @@ def car_racing_multi2():
             if powerup4_hit:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedBoatMultiplayer.png")
                 powerup4_active = True
                 
                 
@@ -2229,7 +2225,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup4_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map2.png")
                     
                     
                     powerup4_hit = False
@@ -2259,14 +2255,14 @@ def car_racing_multi2():
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit2 = True
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit2 = True
@@ -2291,7 +2287,7 @@ def car_racing_multi2():
             powerup1_active2 = False
             powerup_duration = 300
             if powerup1_hit2:
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenBoatMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active2 = True
                 
@@ -2304,7 +2300,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup1_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map2.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -2318,7 +2314,7 @@ def car_racing_multi2():
             powerup3_active2 = False
             if powerup3_hit2:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenBoatMultiplayer.png")
                 powerup3_active2 = True
                 
                 
@@ -2330,7 +2326,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup3_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map2.png")
                     
                     PlayerCar2.changedimensions(100,100)
                     powerup3_hit2 = False
@@ -2339,7 +2335,7 @@ def car_racing_multi2():
             if powerup4_hit2:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenBoatMultiplayer.png")
                 powerup4_active2 = True
                 
                 
@@ -2351,7 +2347,7 @@ def car_racing_multi2():
 
                 if frame_count >= powerup_duration:
                     powerup4_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map2.png")
                     
                     
                     powerup4_hit2 = False
@@ -2577,10 +2573,10 @@ def car_racing_multi3():
     game_over_image = pygame.image.load("img/lostbackground.jpeg").convert()
     game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
     scorebox = pygame.image.load("img/scorebox2.png")
-    spaceship_sound = pygame.mixer.Sound("engine space.wav")
-    game_over_sound = pygame.mixer.Sound("gameoveraudio.wav")
+    spaceship_sound = pygame.mixer.Sound("sounds/engine space.wav")
+    game_over_sound = pygame.mixer.Sound("sounds/gameoveraudio.wav")
     score = 0
-    button_sound = pygame.mixer.Sound("click.wav")
+    button_sound = pygame.mixer.Sound("sounds/click.wav")
     clock=pygame.time.Clock()
     enemy_hit1 = False
     enemy_hit2 = False
@@ -2723,7 +2719,7 @@ def car_racing_multi3():
                 # Check if there is a car collision
             car_collision_list = pygame.sprite.spritecollide(PlayerCar1, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     enemy_hit1 = True
 
@@ -2746,7 +2742,7 @@ def car_racing_multi3():
             powerup1_active = False
             powerup_duration = 300
             if powerup1_hit:
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedSpaceShipMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active = True
                 
@@ -2759,7 +2755,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup1_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map3.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -2773,7 +2769,7 @@ def car_racing_multi3():
             powerup3_active = False
             if powerup3_hit:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedSpaceShipMultiplayer.png")
                 powerup3_active = True
                 
                 
@@ -2785,7 +2781,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup3_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map3.png")
                     
                     PlayerCar1.changedimensions(100,100)
                     powerup3_hit = False
@@ -2794,7 +2790,7 @@ def car_racing_multi3():
             if powerup4_hit:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar1.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar1.repaint("img/PowerUpRedSpaceShipMultiplayer.png")
                 powerup4_active = True
                 
                 
@@ -2806,7 +2802,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup4_active = False
-                    PlayerCar1.repaint("img/playermap1.png")
+                    PlayerCar1.repaint("img/player1map3.png")
                     
                     
                     powerup4_hit = False
@@ -2836,7 +2832,7 @@ def car_racing_multi3():
 
             car_collision_list = pygame.sprite.spritecollide(PlayerCar2, all_coming_cars, False, pygame.sprite.collide_mask)
             for car in car_collision_list:
-                    print("Car crash!")
+                    
                     # End Of Game
                     #carryOn = False
                     enemy_hit2 = True
@@ -2861,7 +2857,7 @@ def car_racing_multi3():
             powerup1_active2 = False
             powerup_duration = 300
             if powerup1_hit2:
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenSpaceShipMultiplayer.png")
                 #all_sprites_list.remove(slowPU)
                 powerup1_active2 = True
                 
@@ -2874,7 +2870,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup1_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map3.png")
                     #all_sprites_list.add(slowPU)
                     for car in all_coming_cars:
                         car.changeSpeed(random.randint(70, 110))
@@ -2888,7 +2884,7 @@ def car_racing_multi3():
             powerup3_active2 = False
             if powerup3_hit2:
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenSpaceShipMultiplayer.png")
                 powerup3_active2 = True
                 
                 
@@ -2900,7 +2896,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup3_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map3.png")
                     
                     PlayerCar2.changedimensions(100,100)
                     powerup3_hit2 = False
@@ -2909,7 +2905,7 @@ def car_racing_multi3():
             if powerup4_hit2:
 
                 #all_sprites_list.remove(shrinkPU)
-                PlayerCar2.repaint("img/PowerUpYellowCarSinglePlayer.png")
+                PlayerCar2.repaint("img/PowerUpGreenSpaceShipMultiplayer.png")
                 powerup4_active2 = True
                 
                 
@@ -2921,7 +2917,7 @@ def car_racing_multi3():
 
                 if frame_count >= powerup_duration:
                     powerup4_active2 = False
-                    PlayerCar2.repaint("img/playermap1.png")
+                    PlayerCar2.repaint("img/player2map3.png")
                     
                     
                     powerup4_hit2 = False
