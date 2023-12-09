@@ -1,8 +1,9 @@
 import pygame
 import random
 import time
+from abc import ABC, abstractmethod
 
-class PowerUp:
+class PowerUp(ABC):
   def __init__(self, image, pu_duration):
     self.image = image
     self.pu_duration = pu_duration
