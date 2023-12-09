@@ -1,11 +1,22 @@
 import pygame
 import random
 import time
-from abc import ABC, abstractclassmethod
-from car import Car
+from abc import ABC, abstractmethod
 
 
 
+'''class PowerUp(ABC):
+    def __init__(self, image):
+        self.image = image
+        self.active = False
+
+    @abstractmethod
+    def affect_player(self, player):
+        pass
+
+    @abstractmethod
+    def affect_traffic(self, traffic):
+        pass'''
 
 
 class SlowPowerUp(pygame.sprite.Sprite):
@@ -89,8 +100,9 @@ class ShrinkPlayerPowerUp(pygame.sprite.Sprite):
        self.rect = self.image.get_rect()
 
     def affect_player(self, width, height):
-        self.width
-        pass
+        self.width = width
+        self.height = height
+        
 
     def moveForward(self, speed):
         self.rect.y += self.speed * speed / 20
